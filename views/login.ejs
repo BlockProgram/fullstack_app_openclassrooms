@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <% include partials/head %>
+    <script async src="./js/login.js"></script>
+  </head>
+  <body>
+    <header>
+      <% include partials/header1 %>
+    </header>
+    <main class="main-container">
+      <form id="form" class="form signup__form">
+        <div class="form-control">
+          <label for="email">Email</label>
+          <input type="text" id="email__login" class="input-data" />
+          <small></small>
+        </div>
+        <div class="form-control login__error password">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password__login" class="input-data" />
+          <small>Error message</small>
+        </div>
+        <button class="form__btn login__btn">
+          Se connecter
+        </button>
+      </form>
+    </main>
+  </body>
+  <footer>
+    <a href="/">
+      <p class="home__link">Accueil</p>
+    </a>
+  </footer>
+</html>

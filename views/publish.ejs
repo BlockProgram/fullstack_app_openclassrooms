@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <% include partials/head %>
+  </head>
+  <body>
+    <header class="header-feed">
+        <% include partials/header2 %>
+      </header>
+      <main>
+        <h1 class="publish__title">Publier un GIF</h1>
+        <form id="form" class="form">
+          <div class="form-control">
+            <label for="publish__gif-title">Titre</label>
+            <input type="text" id="publish__gif-title" class="input-data" />
+            <small>Error message</small>
+          </div>
+          <div class="form-control publish__last-container">
+            <label for="publish__url">Adresse URL du GIF</label>
+            <input type="text" id="publish__url" class="input-data" />
+            <small>Une URL ou un fichier GIF est obligatoire</small>
+          </div>
+          <p class="publish__or-text">OU</p>
+          <div class="form-control">
+            <input type="file" accept=".gif" id="file" class="publish__file" />
+            <label class="publish__upload-btn" for="file"
+              >Ajouter un fichier GIF</label
+            >
+          </div>
+          <button class="form__btn publish__btn">
+            Publier
+          </button>
+        </form>
+      </main>
+      <footer>
+        <a href="/">
+          <p class="home__link">Accueil</p>
+        </a>
+        <a href="/profile">
+          <p class="profile__link">Profil</p>
+        </a>
+      </footer>
+</html>

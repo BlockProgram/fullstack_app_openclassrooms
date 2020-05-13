@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <% include partials/head %>
+  </head>
+  <body>
+    <header class="header-feed">
+        <% include partials/header2 %>
+      </header>
+      <main>
+        <section class="post">
+          <h1 class="post__title">Check this out</h1>
+          <div class="post__topdata">
+            <h2 class="post__author">Author</h2>
+            <p>-</p>
+            <h3 class="post__time">Time posted</h3>
+          </div>
+          <img
+            class="gif"
+            src="https://media.giphy.com/media/Jlw0pT4qKuGFW/giphy.gif"
+            alt="Chauve-souris mange une banane"
+          />
+          <div class="post__comments">
+            <p class="post__comments-number">x commentaires</p>
+            <form class="post__publish-comment">
+              <input type="text" />
+              <button class="post__publish-btn">Commenter</button>
+            </form>
+            <div class="post__comment">
+              <div class="post__comment-wrapper">
+                <p class="post__comment-author">Nicolai</p>
+                <p>-</p>
+                <p class="post__comment-time">Il y a 30 minutes</p>
+              </div>
+              <p class="post__comment-text">
+                Mdr allez j'adopte une chauve-souris !
+              </p>
+            </div>
+            <div class="post__comment">
+              <div class="post__comment-wrapper">
+                <p class="post__comment-author">Edouard</p>
+                <p>-</p>
+                <p class="post__comment-time">Il y a 1 heure</p>
+              </div>
+              <p class="post__comment-text">
+                Trop mignon
+              </p>
+            </div>
+            <div class="post__comment">
+              <div class="post__comment-wrapper">
+                <p class="post__comment-author">Zoé</p>
+                <p>-</p>
+                <p class="post__comment-time">Il y a 3 heures</p>
+              </div>
+              <p class="post__comment-text">
+                Incroyable ce GIF
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <a href="/">
+          <p class="home__link">Accueil</p>
+        </a>
+        <a href="/profile">
+          <p class="profile__link">Profil</p>
+        </a>
+      </footer>
+</html>

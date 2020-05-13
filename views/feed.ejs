@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <% include partials/head %>
+    <script async src="./js/feed.js"></script>
+  </head>
+  <body>
+    <header class="header-feed">
+        <% include partials/header2 %>
+      </header>
+    <main>
+        <a href="/publish">
+          <button class="post-btn"><h1>Publier un GIF</h1></button>
+        </a>
+        <a class="gif__container" href="/post">
+          <h2 class="gif__title">Title</h2>
+          <div class="gif__topdata">
+            <h3>Author</h3>
+            <p>-</p>
+            <h4>Il y a 5 minutes</h4>
+          </div>
+          <img
+            class="gif"
+            src="https://media.giphy.com/media/Jlw0pT4qKuGFW/giphy.gif"
+            alt="Chauve-souris mange une banane"
+          />
+          <div class="gif__bottomdata">
+            <p class="gif__comments">5 commmentaires</p>
+            <button class="gif__share">
+              Partager
+            </button>
+            <div class="gif__dropdown">
+              <button class="dropdown--closebtn">X</button>
+              <p>Lien du post :</p>
+              <input class="dropdown--input" type="text" />
+              <button class="dropdown--copybtn">Copier</button>
+            </div>
+          </div>
+        </a>
+        <a class="gif__container" href="/post">
+          <h2 class="gif__title">Title</h2>
+          <div class="gif__topdata">
+            <h3>Author</h3>
+            <p>-</p>
+            <h4>Il y a 5 minutes</h4>
+          </div>
+          <img
+            class="gif"
+            src="https://media.giphy.com/media/2cGZ0zMvFfAfm/giphy.gif"
+            alt="Une femme mange du sable après avoir été propulsée dans les airs par une branche"
+          />
+          <div class="gif__bottomdata">
+            <p class="gif__comments">5 commmentaires</p>
+            <button class="gif__share">
+              Partager
+            </button>
+            <div class="gif__dropdown">
+              <button class="dropdown--closebtn">X</button>
+              <p>Lien du post :</p>
+              <input class="dropdown--input" type="text" />
+              <button class="dropdown--copybtn">Copier</button>
+            </div>
+          </div>
+        </a>
+      </main>
+      <footer>
+        <a href="/">
+          <p class="home__link">Accueil</p>
+        </a>
+        <a href="/profile">
+          <p class="profile__link">Profil</p>
+        </a>
+      </footer>
+</html>

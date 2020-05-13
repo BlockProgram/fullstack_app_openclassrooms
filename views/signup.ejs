@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <% include partials/head %>
+    <script async src="./js/signup.js"></script>
+  </head>
+  <body>
+    <header>
+      <% include partials/header1 %>
+    </header>
+    <main class="main-container">
+      <form id="form" class="form signup__form">
+        <div class="form-control">
+          <label for="first__name">Prénom</label>
+          <input type="text" id="first__name" class="input-data" />
+          <small>Error message</small>
+        </div>
+        <div class="form-control">
+          <label for="last__name">Nom</label>
+          <input type="text" id="last__name" class="input-data" />
+          <small>Error message</small>
+        </div>
+        <div class="form-control success">
+          <label for="department">Département</label>
+          <select id="department" class="input-data">
+            <option value="ressources humaines">Ressources Humaines</option>
+            <option value="marketing">Marketing</option>
+            <option value="comptabilité">Comptabilité</option>
+            <option value="logistique">Logistique</option>
+            <option value="ventes">Ventes</option>
+          </select>
+          <small>Error message</small>
+        </div>
+        <div class="form-control">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="input-data" />
+          <small>Error message</small>
+        </div>
+        <div class="form-control">
+          <label for="password">Mot de passe</label>
+          <input
+            class="password__input input-data"
+            type="password"
+            id="password"
+          />
+          <small class="password__small">Error message</small>
+        </div>
+        <div class="password__info">
+          <p>Votre mot de passe doit contenir au minimum:</p>
+          <ul>
+            <li>- 8 caractères</li>
+            <li>- 1 lettre minuscule</li>
+            <li>- 1 lettre majuscule</li>
+            <li>- 1 chiffre</li>
+            <li>- 1 caractère spécial ($, &, %...)</li>
+          </ul>
+        </div>
+
+        <button class="form__btn signup__btn">
+          S'inscrire
+        </button>
+      </form>
+    </main>
+  </body>
+  <footer>
+    <a href="/">
+      <p class="home__link">Accueil</p>
+    </a>
+  </footer>
+</html>
