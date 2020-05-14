@@ -360,6 +360,7 @@ footer .profile__link {
 .gif {
   display: block;
   margin: 0 auto;
+  max-height: 400px;
   width: 100%;
 }
 .gif__title {

@@ -25,25 +25,24 @@ function postLogin() {
   req.send(JSON.stringify(loginData));
 
   req.onreadystatechange = (e) => {
-    let response = JSON.parse(req.response);
-    if (req.status == 400 || req.status == 204 || req.status == 206) {
-      console.log(response);
-      errorMsg.textContent = response;
+    if (
+      (req.readyState > 3 && req.status == 400) ||
+      (req.readyState > 3 && req.status == 204) ||
+      (req.readyState > 3 && req.status == 206)
+    ) {
+      errorMsg.textContent = req.response;
       allFormControl.forEach((el) => {
         el.classList.add("error");
       });
     } else if (req.readyState > 3 && req.status == 200) {
-      console.log(response);
-      localStorage.setItem("Auth", response.accessToken);
-      localStorage.setItem("AuthUser", response.userEmail);
       allFormControl.forEach((el) => {
         el.classList.add("success");
       });
-      var authHeaders = new Headers();
-      authHeaders.set(
-        "Authorization",
-        `BEARER ${localStorage.getItem("Auth")} `
-      );
+      let response = JSON.parse(req.response);
+      console.log(response);
+      localStorage.setItem("Auth", response.accessToken);
+      localStorage.setItem("AuthUser", response.userId);
+
       window.location.href = "/feed";
     }
   };

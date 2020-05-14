@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mysql = require("mysql");
 
-var connection = mysql.createConnection({
+let connection = mysql.createConnection({
   host: "localhost",
   user: "openclass",
   password: "randompass6",
@@ -45,25 +45,25 @@ exports.login = async (req, res, next) => {
   let sql = "SELECT * FROM Users WHERE email = ?";
   connection.query(sql, [email], async (err, results) => {
     if (err) {
-      res.status(400).json({ message: "Une erreur est survenue" });
+      res.status(400).json("Une erreur est survenue");
     } else {
       if (results.length > 0) {
         const comparison = await bcrypt.compare(password, results[0].mdp);
         if (comparison) {
-          const userEmail = results[0].email;
+          const userId = results[0].id;
           const accessToken = jwt.sign(
-            { email: results[0].email },
+            { id: userId },
             "721bc0d71be67084ee54b97e88abaadc11c37115fd7c5e12e8d11d04c2a924ed8b68ff92f19e3089f4311b08ab3c7ae7d6279f9d512437452faa29606504af94",
             {
               expiresIn: "24h",
             }
           );
-          res.status(200).json({ accessToken, userEmail });
+          res.status(200).json({ accessToken, userId });
         } else {
-          res.status(204).json({ message: "Mot de passe incorrect" });
+          res.status(204).json("Mot de passe incorrect");
         }
       } else {
-        res.status(206).json({ message: "Email invalide" });
+        res.status(206).json("Email invalide");
       }
     }
   });

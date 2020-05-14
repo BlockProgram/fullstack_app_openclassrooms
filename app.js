@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/post");
+const profileRoutes = require("./routes/profile");
 const index = require("./routes/index");
 
 const app = express();
@@ -32,16 +34,7 @@ app.use("/", index);
 app.use(bodyParser.json());
 
 app.use("/api/auth", userRoutes);
-
-// SQL EXAMPLES
-
-// // Select single post
-// app.get("/getposts/:id", (req, res) => {
-//   let sql = `SELECT * FROM Posts WHERE id = ${req.params.id}`;
-//   let query = connection.query(sql, (err, result) => {
-//     if (err) throw err;
-//     res.send(result);
-//   });
-// });
+app.use("/api/posts", postRoutes);
+app.use("/api/profile", profileRoutes);
 
 module.exports = app;
