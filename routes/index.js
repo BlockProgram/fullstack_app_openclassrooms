@@ -16,6 +16,6 @@ router.get("/profile", indexCtlr.profile);
 
 router.get("/publish", indexCtlr.publish);
 
-router.get("/post", indexCtlr.post);
+router.get("/post/:id", indexCtlr.post);
 
 module.exports = router;

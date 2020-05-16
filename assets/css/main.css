@@ -381,13 +381,24 @@ footer .profile__link {
   grid-template-columns: 60% 40%;
   margin: 10px 0;
   padding: 0 10px;
-  place-items: center start;
+}
+.gif__comments {
+  display: flex;
+}
+.gif__comments p {
+  margin-top: 2px;
 }
 .gif__share {
   border-radius: 5px;
   font-size: 1rem;
-  place-self: center end;
+  place-self: end end;
   padding: 3px;
+}
+
+.far.fa-comment {
+  color: #021775;
+  font-size: 1.5rem;
+  margin-right: 8px;
 }
 
 .gif__dropdown {
@@ -507,7 +518,7 @@ label.publish__upload-btn:focus {
 
 /* POST STYLES */
 .post {
-  margin: 40px 0 30px;
+  margin: 40px 0 10px;
   width: 85%;
 }
 .post__title {
@@ -519,27 +530,39 @@ label.publish__upload-btn:focus {
 .post__topdata {
   display: flex;
   margin: 5px 0 10px;
+  position: relative;
 }
 .post__topdata p {
   margin: 0 10px;
+}
+.post__delete-btn {
+  background-color: #e0001e;
+  font-size: 1rem;
+  height: 100%;
+  right: 0;
+  position: absolute;
+  width: 100px;
 }
 .post__gif {
   width: 100%;
 }
 .post__comments-number {
   border-bottom: 1px solid #ccc;
-  margin: 10px 0 20px;
+  margin: 10px 0 15px;
+  padding-bottom: 5px;
 }
 .post__publish-comment {
   margin-top: 10px;
 }
 .post__publish-comment input {
+  font-size: 1rem;
   height: 40px;
   margin-bottom: 10px;
-  width: 90%;
+  width: 100%;
 }
 .post__publish-btn {
   font-size: 1rem;
+  padding: 5px;
 }
 .post__comment {
   border-bottom: 1px solid #ccc;
@@ -549,15 +572,28 @@ label.publish__upload-btn:focus {
 .post__comment-wrapper {
   display: flex;
   margin-bottom: 5px;
+  position: relative;
 }
 .post__comment-wrapper p:nth-of-type(2) {
   margin: 0 10px;
+}
+.post__comment-delete {
+  background-color: #e0001e;
+  color: #fff;
+  font-size: 1rem;
+  right: 0;
+  position: absolute;
 }
 .post__comment-author {
   font-weight: bold;
 }
 .post__comment-time {
   color: #686868;
+}
+
+.post__comments {
+  margin-bottom: 30px;
+  width: 80%;
 }
 
 /* MEDIA QUERIES */
@@ -651,7 +687,6 @@ label.publish__upload-btn:focus {
   }
   .post__publish-comment input {
     height: 50px;
-    width: 95%;
   }
   .post__publish-btn {
     font-size: 1.1rem;

@@ -380,14 +380,25 @@ footer .profile__link {
     grid-template-columns: 60% 40%;
     margin: 10px 0;
     padding: 0 10px;
-    place-items: center start;
+  }
+  &__comments {
+    display: flex;
+    & p {
+      margin-top: 2px;
+    }
   }
   &__share {
     border-radius: 5px;
     font-size: 1rem;
-    place-self: center end;
+    place-self: end end;
     padding: 3px;
   }
+}
+
+.far.fa-comment {
+  color: $secondary-color;
+  font-size: 1.5rem;
+  margin-right: 8px;
 }
 
 .gif__dropdown {
@@ -509,7 +520,7 @@ label.publish__upload-btn {
 
 /* POST STYLES */
 .post {
-  margin: 40px 0 30px;
+  margin: 40px 0 10px;
   width: 85%;
   &__title {
     font-size: 1.15rem;
@@ -520,27 +531,39 @@ label.publish__upload-btn {
   &__topdata {
     display: flex;
     margin: 5px 0 10px;
+    position: relative;
   }
   &__topdata p {
     margin: 0 10px;
+  }
+  &__delete-btn {
+    background-color: $primary-color;
+    font-size: 1rem;
+    height: 100%;
+    right: 0;
+    position: absolute;
+    width: 100px;
   }
   &__gif {
     width: 100%;
   }
   &__comments-number {
     border-bottom: 1px solid $medium-grey;
-    margin: 10px 0 20px;
+    margin: 10px 0 15px;
+    padding-bottom: 5px;
   }
   &__publish-comment {
     margin-top: 10px;
   }
   &__publish-comment input {
+    font-size: 1rem;
     height: 40px;
     margin-bottom: 10px;
-    width: 90%;
+    width: 100%;
   }
   &__publish-btn {
     font-size: 1rem;
+    padding: 5px;
   }
   &__comment {
     border-bottom: 1px solid $medium-grey;
@@ -550,17 +573,29 @@ label.publish__upload-btn {
   &__comment-wrapper {
     display: flex;
     margin-bottom: 5px;
+    position: relative;
   }
   &__comment-wrapper p:nth-of-type(2) {
     margin: 0 10px;
   }
-
+  &__comment-delete {
+    background-color: $primary-color;
+    color: #fff;
+    font-size: 1rem;
+    right: 0;
+    position: absolute;
+  }
   &__comment-author {
     font-weight: bold;
   }
   &__comment-time {
     color: $dark-grey;
   }
+}
+
+.post__comments {
+  margin-bottom: 30px;
+  width: 80%;
 }
 
 /* MEDIA QUERIES */
@@ -657,7 +692,6 @@ label.publish__upload-btn {
     }
     &__publish-comment input {
       height: 50px;
-      width: 95%;
     }
     &__publish-btn {
       font-size: 1.1rem;

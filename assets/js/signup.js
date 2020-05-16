@@ -29,7 +29,7 @@ function formatRequestData() {
   });
 
   console.log(signupData);
-  // postData();
+  postData();
 }
 
 // POST request function
@@ -62,4 +62,14 @@ signUpBtn.addEventListener("click", function (e) {
   checkPassword(password);
 
   checkAllFields();
+});
+
+// Display info for password
+const passwordInput = document.querySelector(".password__input");
+const passwordInfo = document.querySelector(".password__info");
+const passwordSmall = document.querySelector(".password__small");
+
+passwordInput.addEventListener("focus", () => {
+  passwordSmall.style.display = "none";
+  passwordInfo.style.display = "block";
 });

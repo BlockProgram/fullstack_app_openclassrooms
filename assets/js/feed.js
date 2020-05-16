@@ -10,7 +10,7 @@ function getData() {
   req.send();
 
   req.onreadystatechange = (e) => {
-    if (req.readyState > 3 && req.status == 200 && req.response !== "") {
+    if (req.readyState > 3 && req.status == 200) {
       console.log(req.response);
       displayGifs(JSON.parse(req.response));
     }
@@ -23,12 +23,13 @@ function displayGifs(array) {
   array.forEach((gif) => {
     let gifContainer = document.createElement("a");
     gifContainer.classList.add("gif__container");
-    gifContainer.setAttribute("href", "/post");
+    gifContainer.setAttribute("href", `/post/${gif.postId}`);
 
     let datePost = gif.date;
     let jsDate = new Date(Date.parse(datePost)).toLocaleString();
 
-    gifContainer.innerHTML = `      
+    if (gif.postId !== null) {
+      gifContainer.innerHTML = `      
     <h2 class="gif__title">${gif.titre}</h2>
     <div class="gif__topdata">
       <h3>${gif.prenom} ${gif.nom}</h3>
@@ -41,19 +42,18 @@ function displayGifs(array) {
       alt="${gif.titre}"
     />
     <div class="gif__bottomdata">
-      <p class="gif__comments">5 commmentaires</p>
+      <div class="gif__comments"><i class="far fa-comment"></i><p>${gif.nbComments}</p></div>
       <button class="gif__share">
         Partager
       </button>
       <div class="gif__dropdown">
         <button class="dropdown--closebtn">X</button>
         <p>Lien du post :</p>
-        <input class="dropdown--input" type="text" />
+        <input placeholder="Ecrire un commentaire" class="dropdown--input" type="text"  />
         <button class="dropdown--copybtn">Copier</button>
       </div>
     </div>`;
 
-    if (gif.id !== null) {
       main.appendChild(gifContainer);
     }
   });

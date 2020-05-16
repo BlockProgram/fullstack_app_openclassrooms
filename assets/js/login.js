@@ -1,5 +1,5 @@
 const email = document.getElementById("email__login");
-const password = document.getElementById("email__password");
+const password = document.getElementById("password__login");
 const inputsData = document.querySelectorAll(".input-data");
 const allFormControl = document.querySelectorAll(".form-control");
 const errorMsg = document.querySelector(".login__error small");
@@ -36,6 +36,7 @@ function postLogin() {
       });
     } else if (req.readyState > 3 && req.status == 200) {
       allFormControl.forEach((el) => {
+        el.classList.remove("error");
         el.classList.add("success");
       });
       let response = JSON.parse(req.response);
