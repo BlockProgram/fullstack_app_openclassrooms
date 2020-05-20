@@ -13,7 +13,6 @@ function submitLogin() {
     loginData[input.id] = input.value;
   });
 
-  console.log(loginData);
   postLogin();
 }
 
@@ -30,21 +29,22 @@ function postLogin() {
       (req.readyState > 3 && req.status == 204) ||
       (req.readyState > 3 && req.status == 206)
     ) {
-      errorMsg.textContent = req.response;
       allFormControl.forEach((el) => {
         el.classList.add("error");
       });
+      let response = JSON.parse(req.response);
+      errorMsg.textContent = response;
     } else if (req.readyState > 3 && req.status == 200) {
       allFormControl.forEach((el) => {
         el.classList.remove("error");
         el.classList.add("success");
-      });
-      let response = JSON.parse(req.response);
-      console.log(response);
-      localStorage.setItem("Auth", response.accessToken);
-      localStorage.setItem("AuthUser", response.userId);
+        let accessToken = JSON.parse(req.response).accessToken;
 
-      window.location.href = "/feed";
+        let req2 = new XMLHttpRequest();
+        req2.open("GET", "http://localhost:3000/feed");
+        req2.setRequestHeader("Authorization", `BEARER ${accessToken}`);
+        req2.send();
+      });
     }
   };
 }

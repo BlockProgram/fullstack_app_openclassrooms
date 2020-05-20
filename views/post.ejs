@@ -30,7 +30,21 @@
         <section class="post">
         </section>
         <section class="post__comments">
+          <div class="post__comments-topdata">
             <p class="post__comments-number"></p> 
+            <button onclick="toggleDropDown()" class="share-btn">
+              Partager
+            </button>
+          </div>
+          <div class="gif__dropdown">
+            <button onclick="closeDropDown()" class="dropdown--closebtn">X</button>
+            <p class="dropdown--copiedmsg">Lien copié</p>
+            <p>Lien du post :</p>
+            <input class="dropdown--input" type="text"  />
+            <button onclick="copyToClipboard()" class="dropdown--copybtn">Copier</button>
+            
+          </div>
+            
             <div class="post__publish-comment">
               <input class="post__input-comment" type="text" placeholder="Ecrire un commentaire..." />
               <button class="post__publish-btn">Commenter</button>

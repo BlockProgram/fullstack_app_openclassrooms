@@ -149,12 +149,13 @@ body {
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 main {
   align-items: center;
-  background-color: #edebeb;
-  min-height: 83vh;
+  background-color: #f7f5f5;
+  min-height: 86vh;
   display: flex;
   flex-direction: column;
 }
@@ -178,11 +179,10 @@ button:focus {
 /* HEADER STYLES */
 header {
   align-items: center;
-  background-color: #e0001e;
-  color: #fff;
+  background-color: #021775;
   display: grid;
   grid-template-columns: 1fr;
-  height: 10vh;
+  height: 8vh;
   justify-content: center;
 }
 header a {
@@ -202,7 +202,7 @@ header a {
 .header__btn {
   background-color: #fff;
   border-radius: 10px;
-  color: #e0001e;
+  color: #021775;
   font-size: 1.25rem;
   margin-right: 10%;
   position: absolute;
@@ -214,10 +214,10 @@ header a {
 /* FOOTER STYLES */
 footer {
   align-items: center;
-  background-color: #e0001e;
+  background-color: #021775;
   color: #fff;
   display: flex;
-  height: 7vh;
+  height: 6vh;
   justify-content: center;
   text-transform: uppercase;
 }
@@ -333,7 +333,7 @@ footer .profile__link {
 }
 
 .header__logo-feed {
-  height: 30px;
+  height: 300px;
   margin-top: 8px;
 }
 
@@ -388,12 +388,6 @@ footer .profile__link {
 .gif__comments p {
   margin-top: 2px;
 }
-.gif__share {
-  border-radius: 5px;
-  font-size: 1rem;
-  place-self: end end;
-  padding: 3px;
-}
 
 .far.fa-comment {
   color: #021775;
@@ -401,14 +395,20 @@ footer .profile__link {
   margin-right: 8px;
 }
 
+.share-btn {
+  border-radius: 5px;
+  font-size: 1rem;
+  place-self: end end;
+  padding: 3px;
+}
+
 .gif__dropdown {
-  background-color: #edebeb;
+  background-color: #f7f5f5;
   box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.35);
-  display: flex;
+  display: none;
   flex-direction: column;
-  height: 150px;
+  height: 130px;
   left: 50%;
-  opacity: 0;
   position: absolute;
   text-align: center;
   top: 52%;
@@ -416,7 +416,7 @@ footer .profile__link {
   width: 80%;
 }
 .gif__dropdown.active {
-  opacity: 1;
+  display: flex;
 }
 .gif__dropdown .dropdown--closebtn {
   background-color: #e0001e;
@@ -440,6 +440,12 @@ footer .profile__link {
   font-size: 13px;
   place-self: center;
   width: 30%;
+}
+.gif__dropdown .dropdown--copiedmsg {
+  display: none;
+}
+.gif__dropdown .dropdown--copiedmsg.active-displayed {
+  display: block;
 }
 
 /* PUBLISH STYLES */
@@ -488,7 +494,7 @@ label.publish__upload-btn:focus {
 .profile__container h1 {
   font-size: 1.3rem;
   font-weight: bold;
-  margin: 30px 0 15px;
+  margin: 30px 0 0;
   text-transform: uppercase;
 }
 
@@ -503,7 +509,7 @@ label.publish__upload-btn:focus {
 }
 
 .modifyprofile-btn {
-  margin-top: 15px;
+  margin-top: -10px;
 }
 
 .logout-btn {
@@ -513,7 +519,6 @@ label.publish__upload-btn:focus {
 
 .erase-btn {
   background-color: #e0001e;
-  margin-bottom: 30px;
 }
 
 /* POST STYLES */
@@ -546,8 +551,10 @@ label.publish__upload-btn:focus {
 .post__gif {
   width: 100%;
 }
-.post__comments-number {
+.post__comments-topdata {
   border-bottom: 1px solid #ccc;
+  display: grid;
+  grid-template-columns: 60% 40%;
   margin: 10px 0 15px;
   padding-bottom: 5px;
 }
@@ -625,10 +632,6 @@ label.publish__upload-btn:focus {
   }
 }
 @media (min-width: 750px) {
-  .header-feed {
-    height: 8vh;
-  }
-
   .header__btn {
     margin-right: 30%;
   }
@@ -636,10 +639,6 @@ label.publish__upload-btn:focus {
   /* FEED STYLES */
   .gif__container {
     width: 75%;
-  }
-
-  .gif__share {
-    margin-right: 10%;
   }
 
   /* PUBLISH STYLES */
@@ -666,7 +665,7 @@ label.publish__upload-btn:focus {
     width: 65%;
   }
 
-  .gif__share {
+  .share-btn {
     padding: 5px;
   }
 

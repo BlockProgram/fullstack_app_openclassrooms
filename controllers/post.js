@@ -16,13 +16,15 @@ connection.connect(function (err) {
 });
 
 exports.publishPost = (req, res, next) => {
+  let body = JSON.parse(req.body.data);
+  console.log(body);
   let post = {
     postId: 0,
-    titre: req.body.titre,
+    titre: body.titre,
     url:
-      req.body.url ||
-      `${req.protocol}://${req.get("host")}/assets/gifs/${req.body.filename}`,
-    auteur: req.body.auteur,
+      body.url ||
+      `${req.protocol}://${req.get("host")}/gifs/${req.file.filename}`,
+    auteur: body.auteur,
     nbComments: 0,
   };
   let sql = "INSERT INTO Posts SET ?, date = NOW()";
@@ -36,14 +38,18 @@ exports.publishPost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
+  let data;
   let sql =
     "SELECT * FROM Users lEFT JOIN Posts ON Users.userId = Posts.auteur ORDER BY Posts.date DESC";
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
+      // data = {};
     } else {
       res.status(200).json(results);
+      // data = results;
     }
+    // return data;
   });
 };
 

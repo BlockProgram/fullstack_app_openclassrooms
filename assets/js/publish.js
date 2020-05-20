@@ -40,7 +40,6 @@ function formatRequestData() {
   publishData = {
     titre: title.value,
     url: urlInput.value,
-    filename: fileInput.value.split("\\")[2],
     auteur: localStorage.getItem("AuthUser"),
   };
 
@@ -48,12 +47,16 @@ function formatRequestData() {
   postData(publishData);
 }
 
-//POST request function
-function postData(input) {
-  var req = new XMLHttpRequest();
+// //POST request function
+async function postData(input) {
+  let gif = document.getElementById("file").files[0]; // file from input
+  let req = new XMLHttpRequest();
+  let formData = new FormData();
+
+  formData.append("gif", gif);
+  formData.append("data", JSON.stringify(input));
   req.open("POST", "http://localhost:3000/api/posts");
-  req.setRequestHeader("Content-Type", "application/json");
-  req.send(JSON.stringify(input));
+  req.send(formData);
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {

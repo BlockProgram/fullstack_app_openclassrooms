@@ -1,7 +1,6 @@
 const main = document.querySelector("main");
-const shareBtn = document.querySelectorAll(".gif__share");
-const shareDropDown = document.querySelector(".gif__dropdown");
-const closeDropDownBtn = document.querySelectorAll(".dropdown--closebtn");
+const dropDownLink = document.querySelector(".dropdown--input");
+const copyLinkBtn = document.querySelector(".dropdown--copybtn");
 
 // Get data from Database
 function getData() {
@@ -11,7 +10,6 @@ function getData() {
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
-      console.log(req.response);
       displayGifs(JSON.parse(req.response));
     }
   };
@@ -21,7 +19,7 @@ getData();
 
 function displayGifs(array) {
   array.forEach((gif) => {
-    let gifContainer = document.createElement("a");
+    let gifContainer = document.createElement("div");
     gifContainer.classList.add("gif__container");
     gifContainer.setAttribute("href", `/post/${gif.postId}`);
 
@@ -29,7 +27,8 @@ function displayGifs(array) {
     let jsDate = new Date(Date.parse(datePost)).toLocaleString();
 
     if (gif.postId !== null) {
-      gifContainer.innerHTML = `      
+      gifContainer.innerHTML = ` 
+      <a href="/post/${gif.postId}">     
     <h2 class="gif__title">${gif.titre}</h2>
     <div class="gif__topdata">
       <h3>${gif.prenom} ${gif.nom}</h3>
@@ -41,16 +40,17 @@ function displayGifs(array) {
       src="${gif.url}"
       alt="${gif.titre}"
     />
+    </a>
     <div class="gif__bottomdata">
-      <div class="gif__comments"><i class="far fa-comment"></i><p>${gif.nbComments}</p></div>
-      <button class="gif__share">
+    <a href="/post/${gif.postId}" class="gif__comments"><i class="far fa-comment"></i><p>${gif.nbComments}</p></a>
+      <button onclick="toggleDropDown()"  class="share-btn">
         Partager
       </button>
       <div class="gif__dropdown">
-        <button class="dropdown--closebtn">X</button>
+        <button onclick="closeDropDown()" class="dropdown--closebtn">X</button>
         <p>Lien du post :</p>
-        <input placeholder="Ecrire un commentaire" class="dropdown--input" type="text"  />
-        <button class="dropdown--copybtn">Copier</button>
+        <input value="http://localhost:3000/post/${gif.postId}" class="dropdown--input" type="text"  />
+        <button onclick="copyToClipboard()" class="dropdown--copybtn">Copier</button>
       </div>
     </div>`;
 
@@ -59,17 +59,27 @@ function displayGifs(array) {
   });
 }
 
-// Event Listeners
-shareBtn.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    e.preventDefault();
-    button.nextElementSibling.classList.toggle("active");
-  });
-});
+function toggleDropDown() {
+  let source = event.target;
+  source.nextElementSibling.classList.toggle("active");
+}
 
-closeDropDownBtn.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    button.parentElement.classList.remove("active");
-    e.preventDefault();
-  });
-});
+function closeDropDown() {
+  let source = event.target;
+  source.parentElement.classList.remove("active");
+}
+
+// Copy post link
+function copyToClipboard() {
+  let source = event.target;
+  source.previousElementSibling.select();
+
+  // Copy the selection to clipboard
+  document.execCommand("copy");
+
+  source.style.backgroundColor = "green";
+
+  setTimeout(() => {
+    source.style.backgroundColor = "#021775";
+  }, 2000);
+}

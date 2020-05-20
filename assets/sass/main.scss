@@ -138,7 +138,7 @@ $secondary-color: #021775;
 $input-color: green;
 $dark-grey: #686868;
 $medium-grey: #ccc;
-$light-grey: #edebeb;
+$light-grey: #f7f5f5;
 
 /* GLOBAL STYLES */
 body {
@@ -149,12 +149,13 @@ body {
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 main {
   align-items: center;
   background-color: $light-grey;
-  min-height: 83vh;
+  min-height: 86vh;
   display: flex;
   flex-direction: column;
 }
@@ -178,11 +179,10 @@ button {
 /* HEADER STYLES */
 header {
   align-items: center;
-  background-color: $primary-color;
-  color: #fff;
+  background-color: $secondary-color;
   display: grid;
   grid-template-columns: 1fr;
-  height: 10vh;
+  height: 8vh;
   justify-content: center;
   & a {
     place-self: center center;
@@ -202,7 +202,7 @@ header {
 .header__btn {
   background-color: #fff;
   border-radius: 10px;
-  color: $primary-color;
+  color: $secondary-color;
   font-size: 1.25rem;
   margin-right: 10%;
   position: absolute;
@@ -214,10 +214,10 @@ header {
 /* FOOTER STYLES */
 footer {
   align-items: center;
-  background-color: $primary-color;
+  background-color: $secondary-color;
   color: #fff;
   display: flex;
-  height: 7vh;
+  height: 6vh;
   justify-content: center;
   text-transform: uppercase;
 }
@@ -333,7 +333,7 @@ footer .profile__link {
 }
 
 .header__logo-feed {
-  height: 30px;
+  height: 300px;
   margin-top: 8px;
 }
 
@@ -387,12 +387,6 @@ footer .profile__link {
       margin-top: 2px;
     }
   }
-  &__share {
-    border-radius: 5px;
-    font-size: 1rem;
-    place-self: end end;
-    padding: 3px;
-  }
 }
 
 .far.fa-comment {
@@ -401,21 +395,27 @@ footer .profile__link {
   margin-right: 8px;
 }
 
+.share-btn {
+  border-radius: 5px;
+  font-size: 1rem;
+  place-self: end end;
+  padding: 3px;
+}
+
 .gif__dropdown {
   background-color: $light-grey;
   box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.35);
-  display: flex;
+  display: none;
   flex-direction: column;
-  height: 150px;
+  height: 130px;
   left: 50%;
-  opacity: 0;
   position: absolute;
   text-align: center;
   top: 52%;
   transform: translate(-50%, -50%);
   width: 80%;
   &.active {
-    opacity: 1;
+    display: flex;
   }
   & .dropdown--closebtn {
     background-color: $primary-color;
@@ -439,6 +439,12 @@ footer .profile__link {
     font-size: 13px;
     place-self: center;
     width: 30%;
+  }
+  & .dropdown--copiedmsg {
+    display: none;
+    &.active-displayed {
+      display: block;
+    }
   }
 }
 
@@ -489,7 +495,7 @@ label.publish__upload-btn {
   & h1 {
     font-size: 1.3rem;
     font-weight: bold;
-    margin: 30px 0 15px;
+    margin: 30px 0 0;
     text-transform: uppercase;
   }
 }
@@ -505,7 +511,7 @@ label.publish__upload-btn {
 }
 
 .modifyprofile-btn {
-  margin-top: 15px;
+  margin-top: -10px;
 }
 
 .logout-btn {
@@ -515,7 +521,6 @@ label.publish__upload-btn {
 
 .erase-btn {
   background-color: $primary-color;
-  margin-bottom: 30px;
 }
 
 /* POST STYLES */
@@ -547,8 +552,10 @@ label.publish__upload-btn {
   &__gif {
     width: 100%;
   }
-  &__comments-number {
+  &__comments-topdata {
     border-bottom: 1px solid $medium-grey;
+    display: grid;
+    grid-template-columns: 60% 40%;
     margin: 10px 0 15px;
     padding-bottom: 5px;
   }
@@ -629,10 +636,6 @@ label.publish__upload-btn {
 }
 
 @media (min-width: 750px) {
-  .header-feed {
-    height: 8vh;
-  }
-
   .header__btn {
     margin-right: 30%;
   }
@@ -640,10 +643,6 @@ label.publish__upload-btn {
   /* FEED STYLES */
   .gif__container {
     width: 75%;
-  }
-
-  .gif__share {
-    margin-right: 10%;
   }
 
   /* PUBLISH STYLES */
@@ -671,7 +670,7 @@ label.publish__upload-btn {
     width: 65%;
   }
 
-  .gif__share {
+  .share-btn {
     padding: 5px;
   }
 

@@ -5,6 +5,9 @@ const inputComment = document.querySelector(".post__input-comment");
 const commentBtn = document.querySelector(".post__publish-btn");
 const deletePostBtn = document.querySelector(".post__delete-btn");
 const deleteCommentBtn = document.querySelector(".post__comment-delete");
+const dropDownMenu = document.querySelector(".gif__dropdown");
+const dropDownLink = document.querySelector(".dropdown--input");
+const copyLinkBtn = document.querySelector(".dropdown--copybtn");
 
 const postID = window.location.href.split("/")[4];
 let commentsNumber = 0;
@@ -18,7 +21,6 @@ function getData() {
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
       let postObject = JSON.parse(req.response)[0];
-      console.log(postObject);
       commentsNumber = postObject.nbComments;
       displayPost(postObject);
     }
@@ -55,7 +57,6 @@ function getComments() {
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
       displayComments(JSON.parse(req.response));
-      console.log(JSON.parse(req.response));
 
       // Display number of comments
       numberCommentsEl.innerHTML = `<i class="far fa-comment"></i>${commentsNumber}`;
@@ -142,6 +143,30 @@ function deleteComment(commentId) {
   req.onreadystatechange = (e) => {
     window.location.reload();
   };
+}
+
+// Toggle share menu
+function toggleDropDown() {
+  dropDownMenu.classList.toggle("active");
+  dropDownLink.value = window.location.href;
+}
+
+function closeDropDown() {
+  dropDownMenu.classList.remove("active");
+}
+
+// Copy post link
+function copyToClipboard() {
+  dropDownLink.select();
+
+  // Copy the selection to clipboard
+  document.execCommand("copy");
+
+  copyLinkBtn.style.backgroundColor = "green";
+
+  setTimeout(() => {
+    copyLinkBtn.style.backgroundColor = "#021775";
+  }, 2000);
 }
 
 // EVENT LISTENERS

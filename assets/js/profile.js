@@ -14,7 +14,7 @@ let userId = {
 // Get data from Database
 function getData() {
   var req = new XMLHttpRequest();
-  req.open("POST", "http://localhost:3000/api/profile");
+  req.open("POST", "http://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(userId));
 
@@ -68,7 +68,7 @@ function formatRequestData() {
 // POST Modify request function
 function postData() {
   var req = new XMLHttpRequest();
-  req.open("PUT", "http://localhost:3000/api/profile");
+  req.open("PUT", "http://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(modifiedData));
 
@@ -82,7 +82,7 @@ function postData() {
 // DELETE Profile
 function deleteProfile() {
   var req = new XMLHttpRequest();
-  req.open("DELETE", "http://localhost:3000/api/profile");
+  req.open("DELETE", "http://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(userId));
 
