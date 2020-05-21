@@ -28,7 +28,7 @@ function checkEmail(input) {
 }
 
 function checkPassword(input) {
-  const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})$/;
+  const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
   if (strongRegex.test(input.value.trim())) {
     showSuccess(input);
   } else {

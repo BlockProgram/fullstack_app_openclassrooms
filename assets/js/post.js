@@ -21,8 +21,11 @@ function getData() {
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
       let postObject = JSON.parse(req.response)[0];
+      console.log(postObject);
       commentsNumber = postObject.nbComments;
       displayPost(postObject);
+    } else if (req.readyState > 3 && req.status == 401) {
+      window.location.href = "/";
     }
   };
 }
@@ -94,7 +97,6 @@ function displayComments(comments) {
 function postComment() {
   let CommentData = {
     commentId: 0,
-    auteur: localStorage.getItem("AuthUser"),
     contenu: inputComment.value,
     postId: postID,
     nbComments: commentsNumber + 1,

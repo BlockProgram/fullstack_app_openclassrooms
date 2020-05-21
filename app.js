@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookies = require("cookie-parser");
 const path = require("path");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, "assets")));
 app.use("/", index);
 
 app.use(bodyParser.json());
+app.use(cookies());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);

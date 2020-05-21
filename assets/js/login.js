@@ -38,12 +38,7 @@ function postLogin() {
       allFormControl.forEach((el) => {
         el.classList.remove("error");
         el.classList.add("success");
-        let accessToken = JSON.parse(req.response).accessToken;
-
-        let req2 = new XMLHttpRequest();
-        req2.open("GET", "http://localhost:3000/feed");
-        req2.setRequestHeader("Authorization", `BEARER ${accessToken}`);
-        req2.send();
+        window.location.href = "/feed";
       });
     }
   };

@@ -40,7 +40,6 @@ function formatRequestData() {
   publishData = {
     titre: title.value,
     url: urlInput.value,
-    auteur: localStorage.getItem("AuthUser"),
   };
 
   console.log(publishData);

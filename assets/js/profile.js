@@ -7,20 +7,18 @@ const modifyBtn = document.querySelector(".modifyprofile-btn");
 const logoutBtn = document.querySelector(".logout-btn");
 const eraseBtn = document.querySelector(".erase-btn");
 
-let userId = {
-  userId: localStorage.getItem("AuthUser"),
-};
-
 // Get data from Database
 function getData() {
-  var req = new XMLHttpRequest();
+  let req = new XMLHttpRequest();
   req.open("POST", "http://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
-  req.send(JSON.stringify(userId));
+  req.send();
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200 && req.response !== "") {
       displayProfile(JSON.parse(req.response)[0]);
+    } else if (req.readyState > 3 && req.status == 401) {
+      window.location.href = "/";
     }
   };
 }
@@ -52,9 +50,7 @@ function checkAllFields() {
 }
 
 // Format data before POST request
-let modifiedData = {
-  userId: localStorage.getItem("AuthUser"),
-};
+let modifiedData = {};
 
 function formatRequestData() {
   inputsData.forEach((input) => {
@@ -67,7 +63,7 @@ function formatRequestData() {
 
 // POST Modify request function
 function postData() {
-  var req = new XMLHttpRequest();
+  let req = new XMLHttpRequest();
   req.open("PUT", "http://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(modifiedData));
@@ -79,12 +75,23 @@ function postData() {
   };
 }
 
+// LOGOUT Profile
+function logOutProfile() {
+  let req = new XMLHttpRequest();
+  req.open("DELETE", "http://localhost:3000/api/auth/profile/logout");
+  req.send();
+
+  req.onreadystatechange = (e) => {
+    window.location.href = "/";
+  };
+}
+
 // DELETE Profile
 function deleteProfile() {
-  var req = new XMLHttpRequest();
+  let req = new XMLHttpRequest();
   req.open("DELETE", "http://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
-  req.send(JSON.stringify(userId));
+  req.send();
 
   req.onreadystatechange = (e) => {
     window.location.href = "/";
@@ -104,6 +111,10 @@ modifyBtn.addEventListener("click", function (e) {
   checkPassword(password);
 
   checkAllFields();
+});
+
+logoutBtn.addEventListener("click", () => {
+  logOutProfile();
 });
 
 eraseBtn.addEventListener("click", () => {

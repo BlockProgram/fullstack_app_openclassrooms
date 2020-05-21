@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const jwt = require("jsonwebtoken");
 
 let connection = mysql.createConnection({
   host: "localhost",
@@ -16,15 +17,17 @@ connection.connect(function (err) {
 });
 
 exports.publishPost = (req, res, next) => {
+  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
+    .userId;
+
   let body = JSON.parse(req.body.data);
-  console.log(body);
   let post = {
     postId: 0,
     titre: body.titre,
     url:
       body.url ||
       `${req.protocol}://${req.get("host")}/gifs/${req.file.filename}`,
-    auteur: body.auteur,
+    auteur: userId,
     nbComments: 0,
   };
   let sql = "INSERT INTO Posts SET ?, date = NOW()";
@@ -67,9 +70,12 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.createComment = (req, res, next) => {
+  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
+    .userId;
+
   let comment = {
     commentId: req.body.id,
-    auteur: req.body.auteur,
+    auteur: userId,
     contenu: req.body.contenu,
     postId: req.body.postId,
   };

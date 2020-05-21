@@ -1,3 +1,4 @@
+require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mysql = require("mysql");
@@ -53,12 +54,17 @@ exports.login = async (req, res, next) => {
           const userId = results[0].userId;
           const accessToken = jwt.sign(
             { userId: userId },
-            "721bc0d71be67084ee54b97e88abaadc11c37115fd7c5e12e8d11d04c2a924ed8b68ff92f19e3089f4311b08ab3c7ae7d6279f9d512437452faa29606504af94",
+            process.env.JWT_PRIVATE_KEY,
             {
               expiresIn: "24h",
             }
           );
-          res.status(200).json({ accessToken, userId });
+          res.cookie("Token", accessToken, {
+            sameSite: true,
+            maxAge: 86400,
+            secure: false,
+          });
+          res.status(200).json({ userId, accessToken });
         } else {
           res.status(204).json("Mot de passe incorrect");
         }
@@ -70,7 +76,10 @@ exports.login = async (req, res, next) => {
 };
 
 exports.getProfile = (req, res, next) => {
-  let sql = `SELECT * FROM Users where userId =${req.body.userId}`;
+  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
+    .userId;
+
+  let sql = `SELECT * FROM Users where userId =${userId}`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
@@ -81,10 +90,13 @@ exports.getProfile = (req, res, next) => {
 };
 
 exports.modifyProfile = async (req, res, next) => {
-  var password = req.body.password;
+  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
+    .userId;
+  let password = req.body.password;
+
   var encryptedPassword = await bcrypt.hash(password, 10);
   let sql = `UPDATE Users SET prenom='${req.body.first__name}', nom='${req.body.last__name}',
-   email='${req.body.email}', departement='${req.body.department}', mdp='${encryptedPassword}' WHERE userId=${req.body.userId}`;
+   email='${req.body.email}', departement='${req.body.department}', mdp='${encryptedPassword}' WHERE userId=${userId}`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
@@ -94,8 +106,18 @@ exports.modifyProfile = async (req, res, next) => {
   });
 };
 
+exports.logOutProfile = async (req, res, next) => {
+  res.cookie("Token", "", {
+    maxAge: 86400,
+  });
+  res.status(200).json({ message: "Utilisateur déconnecté" });
+};
+
 exports.deleteProfile = async (req, res, next) => {
-  let sql = `DELETE FROM Users WHERE userId=${req.body.userId}`;
+  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
+    .userId;
+  let sql = `DELETE FROM Users WHERE userId=${userId}`;
+
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
