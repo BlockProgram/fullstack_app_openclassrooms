@@ -543,11 +543,15 @@ label.publish__upload-btn {
   }
   &__delete-btn {
     background-color: $primary-color;
+    display: none;
     font-size: 1rem;
     height: 100%;
     right: 0;
     position: absolute;
     width: 100px;
+    &.active {
+      display: block;
+    }
   }
   &__gif {
     width: 100%;

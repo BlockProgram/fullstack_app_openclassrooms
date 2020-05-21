@@ -9,8 +9,8 @@ router.post("/", multer, postCtlr.publishPost);
 router.get("/", auth, postCtlr.getAllPosts);
 router.get("/:id", auth, postCtlr.getOnePost);
 router.delete("/:id", auth, postCtlr.deleteOnePost);
-router.post("/:id/comments", postCtlr.createComment);
-router.get("/:id/comments", postCtlr.getAllComments);
-router.delete("/:id/comments", postCtlr.deleteOneComment);
+router.post("/:id/comments", auth, postCtlr.createComment);
+router.get("/:id/comments", auth, postCtlr.getAllComments);
+router.delete("/:id/comments", auth, postCtlr.deleteOneComment);
 
 module.exports = router;

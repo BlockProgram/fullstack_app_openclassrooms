@@ -64,6 +64,11 @@ exports.login = async (req, res, next) => {
             maxAge: 86400,
             secure: false,
           });
+          res.cookie("ID", userId, {
+            sameSite: true,
+            maxAge: 86400,
+            secure: false,
+          });
           res.status(200).json({ userId, accessToken });
         } else {
           res.status(204).json("Mot de passe incorrect");

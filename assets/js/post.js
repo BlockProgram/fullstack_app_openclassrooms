@@ -11,6 +11,7 @@ const copyLinkBtn = document.querySelector(".dropdown--copybtn");
 
 const postID = window.location.href.split("/")[4];
 let commentsNumber = 0;
+let userId = 0;
 
 // Get data from Database
 function getData() {
@@ -20,10 +21,9 @@ function getData() {
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
-      let postObject = JSON.parse(req.response)[0];
-      console.log(postObject);
-      commentsNumber = postObject.nbComments;
-      displayPost(postObject);
+      let response = JSON.parse(req.response);
+      commentsNumber = response.results[0].nbComments;
+      displayPost(response);
     } else if (req.readyState > 3 && req.status == 401) {
       window.location.href = "/";
     }
@@ -32,22 +32,31 @@ function getData() {
 
 getData();
 
-function displayPost(post) {
-  let datePost = post.date;
+function displayPost(data) {
+  let postObject = data.results[0];
+  let userId = data.userId;
+  let secondClass = "";
+
+  // Show post delete button for author & admin
+  if (userId == postObject.auteur) {
+    secondClass = "active";
+  }
+
+  let datePost = postObject.date;
   let jsDate = new Date(Date.parse(datePost)).toLocaleString();
 
   postContainer.innerHTML = `
-  <h1 class="post__title">${post.titre}</h1>
+  <h1 class="post__title">${postObject.titre}</h1>
   <div class="post__topdata">
-    <h2 class="post__author">${post.prenom} ${post.nom}</h2>
+    <h2 class="post__author">${postObject.prenom} ${postObject.nom}</h2>
     <p>-</p>
     <h3 class="post__time">${jsDate}</h3>
-    <button onclick="deletePost()" class="post__delete-btn">Supprimer</button>
+    <button onclick="deletePost()" class="post__delete-btn ${secondClass}">Supprimer</button>
   </div>
   <img
     class="gif"
-    src="${post.url}"
-    alt="${post.titre}"
+    src="${postObject.url}"
+    alt="${postObject.titre}"
   />
   `;
 }
@@ -59,6 +68,7 @@ function getComments() {
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
+      // console.log(JSON.parse(req.response));
       displayComments(JSON.parse(req.response));
 
       // Display number of comments

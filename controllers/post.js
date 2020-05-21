@@ -57,6 +57,7 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
+  let userId = req.cookies["ID"];
   let sql = `SELECT * FROM Users LEFT JOIN Posts ON Users.userId = Posts.auteur where Posts.postId=${req.url.slice(
     1
   )}`;
@@ -64,7 +65,7 @@ exports.getOnePost = (req, res, next) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
     } else {
-      res.status(200).json(results);
+      res.status(200).json({ results, userId });
     }
   });
 };
@@ -112,14 +113,15 @@ exports.deleteOnePost = async (req, res, next) => {
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "1st query failed" });
-    }
-  });
-  let sql2 = `DELETE FROM Comments WHERE postId=${req.body.postId}`;
-  connection.query(sql2, (err, results) => {
-    if (err) {
-      res.status(400).json({ message: "2nd query failed" });
     } else {
-      res.status(200).json({ message: "Post supprimé" });
+      let sql2 = `DELETE FROM Comments WHERE postId=${req.body.postId}`;
+      connection.query(sql2, (err, results) => {
+        if (err) {
+          res.status(400).json({ message: "2nd query failed" });
+        } else {
+          res.status(200).json({ message: "Post supprimé" });
+        }
+      });
     }
   });
 };
