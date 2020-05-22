@@ -147,17 +147,21 @@ body {
   min-height: 100vh;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 main {
   align-items: center;
   background-color: $light-grey;
   min-height: 86vh;
   display: flex;
   flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border-radius: 10px;
 }
 
 .main-container {
@@ -201,7 +205,6 @@ header {
 
 .header__btn {
   background-color: #fff;
-  border-radius: 10px;
   color: $secondary-color;
   font-size: 1.25rem;
   margin-right: 10%;
@@ -314,7 +317,6 @@ footer .profile__link {
 }
 
 .form__btn {
-  border-radius: 10px;
   font-size: 1.2rem;
   padding: 10px;
   margin: 0 auto 20px;
@@ -338,7 +340,6 @@ footer .profile__link {
 }
 
 .post-btn {
-  border-radius: 10px;
   font-size: 1.2rem;
   padding: 10px;
   margin-top: 30px;
@@ -396,7 +397,6 @@ footer .profile__link {
 }
 
 .share-btn {
-  border-radius: 5px;
   font-size: 1rem;
   place-self: end end;
   padding: 3px;
@@ -435,7 +435,6 @@ footer .profile__link {
     width: 80%;
   }
   & .dropdown--copybtn {
-    border-radius: 5px;
     font-size: 13px;
     place-self: center;
     width: 30%;
@@ -542,16 +541,13 @@ label.publish__upload-btn {
     margin: 0 10px;
   }
   &__delete-btn {
-    background-color: $primary-color;
-    display: none;
+    background-color: #fff;
+    color: $primary-color;
     font-size: 1rem;
     height: 100%;
     right: 0;
     position: absolute;
     width: 100px;
-    &.active {
-      display: block;
-    }
   }
   &__gif {
     width: 100%;
@@ -562,9 +558,11 @@ label.publish__upload-btn {
     grid-template-columns: 60% 40%;
     margin: 10px 0 15px;
     padding-bottom: 5px;
+    width: 80%;
   }
   &__publish-comment {
     margin-top: 10px;
+    width: 80%;
   }
   &__publish-comment input {
     font-size: 1rem;
@@ -590,8 +588,9 @@ label.publish__upload-btn {
     margin: 0 10px;
   }
   &__comment-delete {
-    background-color: $primary-color;
-    color: #fff;
+    background-color: #fff;
+    border-radius: 5px;
+    color: $primary-color;
     font-size: 1rem;
     right: 0;
     position: absolute;

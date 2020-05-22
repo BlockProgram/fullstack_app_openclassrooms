@@ -16,7 +16,7 @@ function getData() {
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200 && req.response !== "") {
-      displayProfile(JSON.parse(req.response)[0]);
+      displayProfile(JSON.parse(req.response)[0][0]);
     } else if (req.readyState > 3 && req.status == 401) {
       window.location.href = "/";
     }

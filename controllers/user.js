@@ -19,19 +19,13 @@ connection.connect(function (err) {
 });
 
 exports.signup = async (req, res, next) => {
-  var password = req.body.password;
-  var encryptedPassword = await bcrypt.hash(password, 10);
+  let password = req.body.password;
+  let encryptedPassword = await bcrypt.hash(password, 10);
+  let userId = 0;
+  let su = "false";
 
-  var user = {
-    userId: 0,
-    prenom: req.body.first__name,
-    nom: req.body.last__name,
-    email: req.body.email,
-    departement: req.body.department,
-    mdp: encryptedPassword,
-  };
-  let sql = "INSERT INTO Users SET ?";
-  connection.query(sql, user, (err, results) => {
+  let sql = `CALL signup(${userId}, "${req.body.first__name}", "${req.body.last__name}", "${req.body.email}", "${req.body.department}", "${encryptedPassword}", ${su})`;
+  connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
     } else {
@@ -41,17 +35,17 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
-  let email = req.body.email__login;
   let password = req.body.password__login;
-  let sql = "SELECT * FROM Users WHERE email = ?";
-  connection.query(sql, [email], async (err, results) => {
+  let sql = `CALL login("${req.body.email__login}")`;
+  connection.query(sql, async (err, results) => {
     if (err) {
       res.status(400).json("Une erreur est survenue");
     } else {
       if (results.length > 0) {
-        const comparison = await bcrypt.compare(password, results[0].mdp);
+        const comparison = await bcrypt.compare(password, results[0][0].mdp);
         if (comparison) {
-          const userId = results[0].userId;
+          const su = results[0][0].su;
+          const userId = results[0][0].userId;
           const accessToken = jwt.sign(
             { userId: userId },
             process.env.JWT_PRIVATE_KEY,
@@ -60,11 +54,19 @@ exports.login = async (req, res, next) => {
             }
           );
           res.cookie("Token", accessToken, {
+            httpOnly: true,
             sameSite: true,
             maxAge: 86400,
             secure: false,
           });
           res.cookie("ID", userId, {
+            httpOnly: true,
+            sameSite: true,
+            maxAge: 86400,
+            secure: false,
+          });
+          res.cookie("su", su, {
+            httpOnly: true,
             sameSite: true,
             maxAge: 86400,
             secure: false,
@@ -84,8 +86,8 @@ exports.getProfile = (req, res, next) => {
   let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
     .userId;
 
-  let sql = `SELECT * FROM Users where userId =${userId}`;
-  connection.query(sql, (err, results) => {
+  let sql = `CALL getProfile(${userId})`;
+  connection.query(sql, [userId], (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
     } else {
@@ -98,10 +100,9 @@ exports.modifyProfile = async (req, res, next) => {
   let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
     .userId;
   let password = req.body.password;
+  let encryptedPassword = await bcrypt.hash(password, 10);
 
-  var encryptedPassword = await bcrypt.hash(password, 10);
-  let sql = `UPDATE Users SET prenom='${req.body.first__name}', nom='${req.body.last__name}',
-   email='${req.body.email}', departement='${req.body.department}', mdp='${encryptedPassword}' WHERE userId=${userId}`;
+  let sql = `CALL modifyProfile(${userId}, "${req.body.first__name}", "${req.body.last__name}", "${req.body.email}", "${req.body.department}", "${encryptedPassword}")`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
@@ -111,19 +112,19 @@ exports.modifyProfile = async (req, res, next) => {
   });
 };
 
-exports.logOutProfile = async (req, res, next) => {
+exports.logOutProfile = (req, res, next) => {
   res.cookie("Token", "", {
     maxAge: 86400,
   });
   res.status(200).json({ message: "Utilisateur déconnecté" });
 };
 
-exports.deleteProfile = async (req, res, next) => {
+exports.deleteProfile = (req, res, next) => {
   let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
     .userId;
-  let sql = `DELETE FROM Users WHERE userId=${userId}`;
+  let sql = `CALL deleteProfile(${userId})`;
 
-  connection.query(sql, (err, results) => {
+  connection.query(sql, [userId], (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
     } else {

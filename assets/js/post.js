@@ -11,7 +11,6 @@ const copyLinkBtn = document.querySelector(".dropdown--copybtn");
 
 const postID = window.location.href.split("/")[4];
 let commentsNumber = 0;
-let userId = 0;
 
 // Get data from Database
 function getData() {
@@ -22,8 +21,12 @@ function getData() {
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
       let response = JSON.parse(req.response);
-      commentsNumber = response.results[0].nbComments;
       displayPost(response);
+      console.log(response);
+
+      // Display number of comments
+      commentsNumber = response.results[0][0].nbComments;
+      numberCommentsEl.innerHTML = `<i class="far fa-comment"></i>${commentsNumber}`;
     } else if (req.readyState > 3 && req.status == 401) {
       window.location.href = "/";
     }
@@ -33,25 +36,22 @@ function getData() {
 getData();
 
 function displayPost(data) {
-  let postObject = data.results[0];
+  let postObject = data.results[0][0];
   let userId = data.userId;
-  let secondClass = "";
-
-  // Show post delete button for author & admin
-  if (userId == postObject.auteur) {
-    secondClass = "active";
-  }
+  let su = data.su;
 
   let datePost = postObject.date;
   let jsDate = new Date(Date.parse(datePost)).toLocaleString();
 
-  postContainer.innerHTML = `
+  // Show post delete button for author & admin
+  if (userId == postObject.auteur || su == "true") {
+    postContainer.innerHTML = `
   <h1 class="post__title">${postObject.titre}</h1>
   <div class="post__topdata">
     <h2 class="post__author">${postObject.prenom} ${postObject.nom}</h2>
     <p>-</p>
     <h3 class="post__time">${jsDate}</h3>
-    <button onclick="deletePost()" class="post__delete-btn ${secondClass}">Supprimer</button>
+    <button onclick="deletePost()" class="post__delete-btn">Supprimer</button>
   </div>
   <img
     class="gif"
@@ -59,6 +59,21 @@ function displayPost(data) {
     alt="${postObject.titre}"
   />
   `;
+  } else {
+    postContainer.innerHTML = `
+    <h1 class="post__title">${postObject.titre}</h1>
+    <div class="post__topdata">
+      <h2 class="post__author">${postObject.prenom} ${postObject.nom}</h2>
+      <p>-</p>
+      <h3 class="post__time">${jsDate}</h3>
+    </div>
+    <img
+      class="gif"
+      src="${postObject.url}"
+      alt="${postObject.titre}"
+    />
+    `;
+  }
 }
 
 function getComments() {
@@ -68,37 +83,50 @@ function getComments() {
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
-      // console.log(JSON.parse(req.response));
       displayComments(JSON.parse(req.response));
-
-      // Display number of comments
-      numberCommentsEl.innerHTML = `<i class="far fa-comment"></i>${commentsNumber}`;
     }
   };
 }
 
 getComments();
 
-function displayComments(comments) {
-  comments.forEach((comment) => {
+function displayComments(data) {
+  console.log(data);
+  let userId = data.userId;
+  let su = data.su;
+
+  data.results[0].forEach((comment) => {
     let divEl = document.createElement("div");
     divEl.classList.add("post__comment");
 
     let dateComment = comment.dateAjout;
     let jsDate = new Date(Date.parse(dateComment)).toLocaleString();
 
-    divEl.innerHTML = `
+    // Show comment delete button for author & admin
+    if (userId == comment.auteur || su == "true") {
+      divEl.innerHTML = `
+      <div class="post__comment-wrapper">
+      <p class="post__comment-author">${comment.prenom} ${comment.nom}</p>
+      <p>-</p>
+      <p class="post__comment-time">${jsDate}</p>
+      <button onclick="deleteComment(${comment.commentId})" class="post__comment-delete">X</button>
+    </div>
+    <p class="post__comment-text">
+    ${comment.contenu}
+    </p>
+      `;
+    } else {
+      divEl.innerHTML = `
         <div class="post__comment-wrapper">
         <p class="post__comment-author">${comment.prenom} ${comment.nom}</p>
         <p>-</p>
         <p class="post__comment-time">${jsDate}</p>
-        <button onclick="deleteComment(${comment.commentId})" class="post__comment-delete">X</button>
       </div>
       <p class="post__comment-text">
       ${comment.contenu}
       </p>
         `;
-
+    }
     commentsContainer.appendChild(divEl);
   });
 }
@@ -117,9 +145,7 @@ function postComment() {
   req.send(JSON.stringify(CommentData));
 
   req.onreadystatechange = (e) => {
-    if (req.readyState > 3 && req.status == 200) {
-      window.location.reload();
-    }
+    window.location.reload();
   };
 }
 

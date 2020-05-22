@@ -14,7 +14,10 @@ function checkGif(input) {
     showSuccess(fileInput);
     showSuccess(input);
   } else {
-    showError(input, "Une URL ou un fichier GIF est obligatoire");
+    showError(
+      input,
+      "Une URL se terminant par '.gif' ou un fichier GIF est obligatoire"
+    );
   }
 }
 
@@ -60,6 +63,8 @@ async function postData(input) {
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
       window.location.href = "/feed";
+    } else {
+      window.location.href = "/";
     }
   };
 }

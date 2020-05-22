@@ -10,7 +10,7 @@ function getData() {
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
-      displayGifs(JSON.parse(req.response));
+      displayGifs(JSON.parse(req.response)[0]);
     } else if (req.readyState > 3 && req.status == 401) {
       window.location.href = "/";
     }

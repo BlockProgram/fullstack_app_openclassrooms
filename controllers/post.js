@@ -21,17 +21,14 @@ exports.publishPost = (req, res, next) => {
     .userId;
 
   let body = JSON.parse(req.body.data);
-  let post = {
-    postId: 0,
-    titre: body.titre,
-    url:
-      body.url ||
-      `${req.protocol}://${req.get("host")}/gifs/${req.file.filename}`,
-    auteur: userId,
-    nbComments: 0,
-  };
-  let sql = "INSERT INTO Posts SET ?, date = NOW()";
-  connection.query(sql, post, (err, results) => {
+  let postId = 0;
+  let nbComments = 0;
+  let url =
+    body.url ||
+    `${req.protocol}://${req.get("host")}/gifs/${req.file.filename}`;
+
+  let sql = `CALL publishPost(${postId}, "${body.titre}", "${url}", ${userId}, ${nbComments})`;
+  connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
     } else {
@@ -42,8 +39,7 @@ exports.publishPost = (req, res, next) => {
 
 exports.getAllPosts = (req, res, next) => {
   let data;
-  let sql =
-    "SELECT * FROM Users lEFT JOIN Posts ON Users.userId = Posts.auteur ORDER BY Posts.date DESC";
+  let sql = "CALL getAllPosts()";
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
@@ -58,63 +54,25 @@ exports.getAllPosts = (req, res, next) => {
 
 exports.getOnePost = (req, res, next) => {
   let userId = req.cookies["ID"];
-  let sql = `SELECT * FROM Users LEFT JOIN Posts ON Users.userId = Posts.auteur where Posts.postId=${req.url.slice(
-    1
-  )}`;
+  let su = req.cookies["su"];
+  let postId = req.url.slice(1);
+  let sql = `CALL getOnePost(${postId})`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
     } else {
-      res.status(200).json({ results, userId });
-    }
-  });
-};
-
-exports.createComment = (req, res, next) => {
-  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
-    .userId;
-
-  let comment = {
-    commentId: req.body.id,
-    auteur: userId,
-    contenu: req.body.contenu,
-    postId: req.body.postId,
-  };
-  let sql = "INSERT INTO Comments SET ?, dateAjout = NOW()";
-  connection.query(sql, comment, (err, results) => {
-    if (err) {
-      res.status(400).json({ message: "An error occured" });
-    }
-  });
-  let sql2 = `UPDATE Posts SET nbComments=${req.body.nbComments} WHERE postId=${req.body.postId}`;
-  connection.query(sql2, (err, results) => {
-    if (err) {
-      res.status(400).json({ message: "An error occured" });
-    } else {
-      res.status(200).json({ message: "Commentaire enregistré" });
-    }
-  });
-};
-
-exports.getAllComments = (req, res, next) => {
-  let postID = req.url.split("/")[1];
-  let sql = `SELECT * FROM Comments lEFT JOIN Users ON Users.userId = Comments.auteur WHERE Comments.postId=${postID} ORDER BY Comments.dateAjout DESC`;
-  connection.query(sql, (err, results) => {
-    if (err) {
-      res.status(400).json({ message: "An error occured" });
-    } else {
-      res.status(200).json(results);
+      res.status(200).json({ results, userId, su });
     }
   });
 };
 
 exports.deleteOnePost = async (req, res, next) => {
-  let sql = `DELETE FROM Posts WHERE postId=${req.body.postId}`;
+  let sql = `CALL deleteOnePost(${req.body.postId})`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "1st query failed" });
     } else {
-      let sql2 = `DELETE FROM Comments WHERE postId=${req.body.postId}`;
+      let sql2 = `CALL deleteOnePostComments(${req.body.postId})`;
       connection.query(sql2, (err, results) => {
         if (err) {
           res.status(400).json({ message: "2nd query failed" });
@@ -126,14 +84,48 @@ exports.deleteOnePost = async (req, res, next) => {
   });
 };
 
+exports.createComment = (req, res, next) => {
+  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
+    .userId;
+
+  let sql = `CALL createComment(${req.body.commentId}, ${userId}, "${req.body.contenu}", ${req.body.postId})`;
+  connection.query(sql, (err, results) => {
+    if (err) {
+      res.status(400).json({ message: "An error occured" });
+    }
+  });
+  let sql2 = `CALL updateCommentsNb(${req.body.nbComments}, ${req.body.postId})`;
+  connection.query(sql2, (err, results) => {
+    if (err) {
+      res.status(400).json({ message: "An error occured" });
+    } else {
+      res.status(200).json({ message: "Commentaire enregistré" });
+    }
+  });
+};
+
+exports.getAllComments = (req, res, next) => {
+  let userId = req.cookies["ID"];
+  let su = req.cookies["su"];
+  let postId = req.url.split("/")[1];
+  let sql = `CALL getAllComments(${postId})`;
+  connection.query(sql, (err, results) => {
+    if (err) {
+      res.status(400).json({ message: "An error occured" });
+    } else {
+      res.status(200).json({ results, userId, su });
+    }
+  });
+};
+
 exports.deleteOneComment = async (req, res, next) => {
-  let sql = `DELETE FROM Comments WHERE commentId=${req.body.commentId}`;
+  let sql = `CALL deleteOneComment(${req.body.commentId})`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "1st query failed" });
     }
   });
-  let sql2 = `UPDATE Posts SET nbComments=${req.body.nbComments} WHERE postId=${req.body.postId}`;
+  let sql2 = `CALL updateCommentsNb(${req.body.nbComments}, ${req.body.postId})`;
   connection.query(sql2, (err, results) => {
     if (err) {
       res.status(400).json({ message: "2nd query failed" });
