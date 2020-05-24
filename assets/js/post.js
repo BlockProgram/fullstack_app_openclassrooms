@@ -49,7 +49,6 @@ function displayPost(data) {
   <h1 class="post__title">${postObject.titre}</h1>
   <div class="post__topdata">
     <h2 class="post__author">${postObject.prenom} ${postObject.nom}</h2>
-    <p>-</p>
     <h3 class="post__time">${jsDate}</h3>
     <button onclick="deletePost()" class="post__delete-btn">Supprimer</button>
   </div>
@@ -64,7 +63,6 @@ function displayPost(data) {
     <h1 class="post__title">${postObject.titre}</h1>
     <div class="post__topdata">
       <h2 class="post__author">${postObject.prenom} ${postObject.nom}</h2>
-      <p>-</p>
       <h3 class="post__time">${jsDate}</h3>
     </div>
     <img

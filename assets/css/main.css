@@ -307,11 +307,14 @@ footer .profile__link {
 }
 
 .password__info {
+  align-self: center;
   background-color: #fff;
   border-radius: 20px;
   display: none;
+  font-size: 1rem;
   margin-bottom: 20px;
   padding: 10px 10px 5px;
+  width: 85%;
 }
 .password__info ul {
   text-align: center;
@@ -337,20 +340,19 @@ footer .profile__link {
 }
 
 .header__logo-feed {
-  height: 300px;
-  margin-top: 8px;
+  height: 30px;
 }
 
 .post-btn {
   font-size: 1.2rem;
   padding: 10px;
-  margin-top: 30px;
+  margin: 30px 0 10px;
 }
 
 .gif__container {
   border: 1px solid #ccc;
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.21);
-  margin: 30px 0 0;
+  margin-top: 20px;
   min-height: 30%;
   position: relative;
   text-decoration: none;
@@ -368,16 +370,18 @@ footer .profile__link {
 }
 .gif__title {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   padding: 5px 10px 0;
+  text-align: center;
 }
 .gif__topdata {
   display: flex;
+  flex-direction: column;
   margin: 5px 0;
   padding: 0 10px;
 }
-.gif__topdata p {
-  margin: 0 10px;
+.gif__topdata h3::after {
+  content: "";
 }
 .gif__bottomdata {
   display: grid;
@@ -476,7 +480,7 @@ footer .profile__link {
 }
 
 label.publish__upload-btn {
-  background-color: #e0001e;
+  background-color: #021775;
   border-radius: 10px;
   color: #fff;
   font-size: 1rem;
@@ -489,6 +493,10 @@ label.publish__upload-btn:hover {
 }
 label.publish__upload-btn:focus {
   outline: 1px solid #021775;
+}
+
+.publish__btn {
+  background-color: #e0001e;
 }
 
 /* PROFILE STYLES */
@@ -524,28 +532,29 @@ label.publish__upload-btn:focus {
 
 /* POST STYLES */
 .post {
-  margin: 40px 0 10px;
+  margin: 30px 0 10px;
   width: 85%;
 }
 .post__title {
   font-size: 1.15rem;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   text-align: center;
 }
 .post__topdata {
   display: flex;
-  margin: 5px 0 10px;
+  flex-direction: column;
+  margin: 5px 0 15px;
   position: relative;
 }
-.post__topdata p {
-  margin: 0 10px;
+.post__author::after {
+  content: "";
 }
 .post__delete-btn {
   background-color: #fff;
   color: #e0001e;
   font-size: 1rem;
-  height: 100%;
+  height: 50%;
   right: 0;
   position: absolute;
   width: 100px;
@@ -559,11 +568,11 @@ label.publish__upload-btn:focus {
   grid-template-columns: 60% 40%;
   margin: 10px 0 15px;
   padding-bottom: 5px;
-  width: 80%;
+  width: 85%;
 }
 .post__publish-comment {
   margin-top: 10px;
-  width: 80%;
+  width: 85%;
 }
 .post__publish-comment input {
   font-size: 1rem;
@@ -574,6 +583,10 @@ label.publish__upload-btn:focus {
 .post__publish-btn {
   font-size: 1rem;
   padding: 5px;
+}
+.post__comments {
+  margin-bottom: 45px;
+  width: 85%;
 }
 .post__comment {
   border-bottom: 1px solid #ccc;
@@ -603,16 +616,42 @@ label.publish__upload-btn:focus {
   color: #686868;
 }
 
-.post__comments {
-  margin-bottom: 30px;
-  width: 80%;
-}
-
 /* MEDIA QUERIES */
+@media (min-width: 370px) {
+  /* SIGNUP STYLES */
+  .password__info {
+    width: auto;
+  }
+}
 @media (min-width: 450px) {
   /* FEED STYLES */
   .header__logo-feed {
     height: 40px;
+  }
+
+  .gif__title {
+    text-align: start;
+  }
+  .gif__topdata {
+    display: flex;
+    flex-direction: initial;
+  }
+  .gif__topdata h3::after {
+    content: "-";
+    margin: 0 10px;
+  }
+
+  /* POST STYLES */
+  .post__topdata {
+    display: flex;
+    flex-direction: initial;
+  }
+  .post__author::after {
+    content: "-";
+    margin: 0 10px;
+  }
+  .post__delete-btn {
+    height: 100%;
   }
 }
 @media (min-width: 600px) {
@@ -622,12 +661,8 @@ label.publish__upload-btn:focus {
   }
 
   /* FEED STYLES */
-  .post-btn {
-    margin-top: 40px;
-  }
-
   .gif__container {
-    margin: 40px 0 0;
+    margin-top: 30px;
     width: 80%;
   }
 
@@ -661,6 +696,10 @@ label.publish__upload-btn:focus {
     margin-right: 40%;
   }
 
+  footer .profile__link {
+    margin-left: 150px;
+  }
+
   .form {
     font-size: 1.15rem;
   }
@@ -686,8 +725,11 @@ label.publish__upload-btn:focus {
   .post__title {
     font-size: 1.3rem;
   }
-  .post__topdata, .post__comments-number {
+  .post__comments-number {
     font-size: 1.15rem;
+  }
+  .post__publish-comment {
+    width: 80%;
   }
   .post__publish-comment input {
     height: 50px;
@@ -695,6 +737,13 @@ label.publish__upload-btn:focus {
   .post__publish-btn {
     font-size: 1.1rem;
     padding: 5px;
+  }
+  .post__comments {
+    margin-bottom: 25px;
+    width: 80%;
+  }
+  .post__comments-topdata {
+    width: 80%;
   }
 
   /* PROFILE STYLES */

@@ -44,7 +44,7 @@ function postData() {
       allFormControls.forEach((el) => {
         el.classList.add("success");
       });
-      window.location.href = "/login";
+      // window.location.href = "/login";
     }
   };
 }
@@ -54,7 +54,7 @@ function postData() {
 signUpBtn.addEventListener("click", function (e) {
   e.preventDefault();
 
-  checkRequired([firstName, lastName, password]);
+  checkRequired([firstName, lastName]);
   checkLength(firstName, 3, 30);
   checkLength(lastName, 3, 30);
   checkLength(email, 3, 40);

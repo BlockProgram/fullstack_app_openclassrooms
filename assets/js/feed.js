@@ -33,7 +33,6 @@ function displayGifs(array) {
     <h2 class="gif__title">${gif.titre}</h2>
     <div class="gif__topdata">
       <h3>${gif.prenom} ${gif.nom}</h3>
-      <p>-</p>
       <h4>${jsDate}</h4>
     </div>
     <img

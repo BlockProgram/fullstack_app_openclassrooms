@@ -32,7 +32,7 @@ function checkPassword(input) {
   if (strongRegex.test(input.value.trim())) {
     showSuccess(input);
   } else {
-    password.parentElement.classList.add("error");
+    showError(input, "Mot de passe invalide");
   }
 }
 
