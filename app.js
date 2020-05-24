@@ -1,4 +1,5 @@
 const express = require("express");
+const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const cookies = require("cookie-parser");
 const path = require("path");
@@ -30,6 +31,8 @@ app.use(express.static(path.join(__dirname, "assets")));
 
 // Render HTML routes
 app.use("/", index);
+
+app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(cookies());
