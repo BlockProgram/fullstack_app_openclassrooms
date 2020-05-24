@@ -84,20 +84,10 @@ exports.createComment = (req, res, next) => {
   let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
     .userId;
 
-  let sql1 = `CALL createComment(${req.body.commentId}, ${userId}, "${req.body.contenu}", ${req.body.postId})`;
-  connection.query(sql1, (err, results) => {
+  let sql = `CALL createComment(${req.body.commentId}, ${userId}, "${req.body.contenu}", ${req.body.postId}, ${req.body.nbComments})`;
+  connection.query(sql, (err, results) => {
     if (err) {
-      res
-        .status(400)
-        .json({ message: "An error occured during the 1st query" });
-    }
-  });
-  let sql2 = `UPDATE Posts SET nbComments=${req.body.nbComments} WHERE postId=${req.body.postId}`;
-  connection.query(sql2, (err, results) => {
-    if (err) {
-      res
-        .status(400)
-        .json({ message: "An error occured during the 2nd query" });
+      res.status(400).json({ message: "An error occured" });
     } else {
       res.status(200).json({ message: "Commentaire ajouté" });
     }
@@ -120,20 +110,10 @@ exports.getAllComments = (req, res, next) => {
 };
 
 exports.deleteOneComment = (req, res, next) => {
-  let sql1 = `CALL deleteOneComment(${req.body.commentId})`;
-  connection.query(sql1, (err, results) => {
+  let sql = `CALL deleteOneComment(${req.body.commentId}, ${req.body.nbComments}, ${req.body.postId})`;
+  connection.query(sql, (err, results) => {
     if (err) {
-      res
-        .status(400)
-        .json({ message: "An error occured during the 1st query" });
-    }
-  });
-  let sql2 = `UPDATE Posts SET nbComments=${req.body.nbComments} WHERE postId=${req.body.postId}`;
-  connection.query(sql2, (err, results) => {
-    if (err) {
-      res
-        .status(400)
-        .json({ message: "An error occured during the 2nd query" });
+      res.status(400).json({ message: "An error occured" });
     } else {
       res.status(200).json({ message: "Commentaire ajouté" });
     }
