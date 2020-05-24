@@ -21,6 +21,7 @@ getData();
 
 function displayGifs(array) {
   array.forEach((gif) => {
+    console.log(gif);
     let gifContainer = document.createElement("div");
     gifContainer.classList.add("gif__container");
     gifContainer.setAttribute("href", `/post/${gif.postId}`);

@@ -136,7 +136,7 @@ function postComment() {
   let CommentData = {
     commentId: 0,
     contenu: inputComment.value,
-    postId: postID,
+    postId: +postID,
     nbComments: commentsNumber + 1,
   };
   let req = new XMLHttpRequest();

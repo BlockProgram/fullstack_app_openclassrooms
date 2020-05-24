@@ -189,6 +189,8 @@ header {
   height: 8vh;
   justify-content: center;
   & a {
+    display: flex;
+    place-items: center center;
     place-self: center center;
   }
 }

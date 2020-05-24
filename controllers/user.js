@@ -59,19 +59,13 @@ exports.login = async (req, res, next) => {
             maxAge: 86400,
             secure: false,
           });
-          res.cookie("ID", userId, {
-            httpOnly: true,
-            sameSite: true,
-            maxAge: 86400,
-            secure: false,
-          });
           res.cookie("su", su, {
             httpOnly: true,
             sameSite: true,
             maxAge: 86400,
             secure: false,
           });
-          res.status(200).json({ userId, accessToken });
+          res.status(200).json({ message: "Connexion établie" });
         } else {
           res.status(204).json("Mot de passe incorrect");
         }

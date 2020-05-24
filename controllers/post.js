@@ -53,7 +53,8 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-  let userId = req.cookies["ID"];
+  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
+    .userId;
   let su = req.cookies["su"];
   let postId = req.url.slice(1);
   let sql = `CALL getOnePost(${postId})`;
@@ -66,36 +67,25 @@ exports.getOnePost = (req, res, next) => {
   });
 };
 
+// Delete a specific post and its comments
 exports.deleteOnePost = async (req, res, next) => {
   let sql = `CALL deleteOnePost(${req.body.postId})`;
   connection.query(sql, (err, results) => {
     if (err) {
-      res.status(400).json({ message: "1st query failed" });
+      res.status(400).json({ message: "An error occured" });
     } else {
-      let sql2 = `CALL deleteOnePostComments(${req.body.postId})`;
-      connection.query(sql2, (err, results) => {
-        if (err) {
-          res.status(400).json({ message: "2nd query failed" });
-        } else {
-          res.status(200).json({ message: "Post supprimé" });
-        }
-      });
+      res.status(200).json({ message: "Post supprimé" });
     }
   });
 };
 
+// Create a comment and update number of comments of Posts Table
 exports.createComment = (req, res, next) => {
   let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
     .userId;
 
-  let sql = `CALL createComment(${req.body.commentId}, ${userId}, "${req.body.contenu}", ${req.body.postId})`;
+  let sql = `CALL createComment(${req.body.commentId}, ${userId}, "${req.body.contenu}", ${req.body.postId}, ${req.body.nbComments})`;
   connection.query(sql, (err, results) => {
-    if (err) {
-      res.status(400).json({ message: "An error occured" });
-    }
-  });
-  let sql2 = `CALL updateCommentsNb(${req.body.nbComments}, ${req.body.postId})`;
-  connection.query(sql2, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
     } else {
@@ -105,7 +95,8 @@ exports.createComment = (req, res, next) => {
 };
 
 exports.getAllComments = (req, res, next) => {
-  let userId = req.cookies["ID"];
+  let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
+    .userId;
   let su = req.cookies["su"];
   let postId = req.url.split("/")[1];
   let sql = `CALL getAllComments(${postId})`;
@@ -119,16 +110,10 @@ exports.getAllComments = (req, res, next) => {
 };
 
 exports.deleteOneComment = async (req, res, next) => {
-  let sql = `CALL deleteOneComment(${req.body.commentId})`;
+  let sql = `CALL deleteOneComment(${req.body.commentId}, ${req.body.nbComments}, ${req.body.postId})`;
   connection.query(sql, (err, results) => {
     if (err) {
-      res.status(400).json({ message: "1st query failed" });
-    }
-  });
-  let sql2 = `CALL updateCommentsNb(${req.body.nbComments}, ${req.body.postId})`;
-  connection.query(sql2, (err, results) => {
-    if (err) {
-      res.status(400).json({ message: "2nd query failed" });
+      res.status(400).json({ message: "An error occured" });
     } else {
       res.status(200).json({ message: "Commentaire supprimé" });
     }
