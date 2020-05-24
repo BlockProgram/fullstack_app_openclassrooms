@@ -21,7 +21,6 @@ getData();
 
 function displayGifs(array) {
   array.forEach((gif) => {
-    console.log(gif);
     let gifContainer = document.createElement("div");
     gifContainer.classList.add("gif__container");
     gifContainer.setAttribute("href", `/post/${gif.postId}`);
@@ -29,8 +28,7 @@ function displayGifs(array) {
     let datePost = gif.date;
     let jsDate = new Date(Date.parse(datePost)).toLocaleString();
 
-    if (gif.postId !== null) {
-      gifContainer.innerHTML = ` 
+    gifContainer.innerHTML = ` 
       <a href="/post/${gif.postId}">     
     <h2 class="gif__title">${gif.titre}</h2>
     <div class="gif__topdata">
@@ -57,8 +55,7 @@ function displayGifs(array) {
       </div>
     </div>`;
 
-      main.appendChild(gifContainer);
-    }
+    main.appendChild(gifContainer);
   });
 }
 

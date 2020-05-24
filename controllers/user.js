@@ -22,9 +22,9 @@ exports.signup = async (req, res, next) => {
   let password = req.body.password;
   let encryptedPassword = await bcrypt.hash(password, 10);
   let userId = 0;
-  let su = "false";
+  let su = false;
 
-  let sql = `CALL signup(${userId}, "${req.body.first__name}", "${req.body.last__name}", "${req.body.email}", "${req.body.department}", "${encryptedPassword}", ${su})`;
+  let sql = `CALL signup(${userId}, "${req.body.first__name}", "${req.body.last__name}", "${req.body.email}", "${req.body.department}", "${encryptedPassword}", "${su}")`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });

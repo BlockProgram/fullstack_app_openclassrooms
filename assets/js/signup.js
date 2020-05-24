@@ -44,7 +44,7 @@ function postData() {
       allFormControls.forEach((el) => {
         el.classList.add("success");
       });
-      // window.location.href = "/login";
+      window.location.href = "/login";
     }
   };
 }
