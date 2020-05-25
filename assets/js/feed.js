@@ -46,7 +46,7 @@ function displayGifs(array) {
       <button onclick="toggleDropDown()"  class="share-btn">
         Partager
       </button>
-      <div class="gif__dropdown">
+      <div class="gif__dropdown dropdown-feed">
         <button onclick="closeDropDown()" class="dropdown--closebtn">X</button>
         <p>Lien du post :</p>
         <input value="http://localhost:3000/post/${gif.postId}" class="dropdown--input" type="text"  />

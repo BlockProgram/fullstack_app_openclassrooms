@@ -417,9 +417,9 @@ footer .profile__link {
   left: 50%;
   position: absolute;
   text-align: center;
-  top: 52%;
+  top: 40%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 55%;
 }
 .gif__dropdown.active {
   display: flex;
@@ -444,13 +444,18 @@ footer .profile__link {
 .gif__dropdown .dropdown--copybtn {
   font-size: 13px;
   place-self: center;
-  width: 30%;
+  width: 40%;
 }
 .gif__dropdown .dropdown--copiedmsg {
   display: none;
 }
 .gif__dropdown .dropdown--copiedmsg.active-displayed {
   display: block;
+}
+
+.gif__dropdown.dropdown-feed {
+  top: 50%;
+  width: 65%;
 }
 
 /* PUBLISH STYLES */
@@ -614,6 +619,7 @@ label.publish__upload-btn:focus {
 }
 .post__comment-time {
   color: #686868;
+  font-size: 0.9rem;
 }
 
 /* MEDIA QUERIES */
@@ -653,6 +659,13 @@ label.publish__upload-btn:focus {
   .post__delete-btn {
     height: 100%;
   }
+  .post__comment-time {
+    font-size: 1rem;
+  }
+
+  .dropdown--copybtn {
+    width: 30%;
+  }
 }
 @media (min-width: 600px) {
   .header__btn {
@@ -666,9 +679,18 @@ label.publish__upload-btn:focus {
     width: 80%;
   }
 
+  .gif__dropdown.dropdown-feed {
+    top: 50%;
+    width: 55%;
+  }
+
   /* POST STYLES */
   .post {
     width: 80%;
+  }
+
+  .gif__dropdown {
+    top: 45%;
   }
 }
 @media (min-width: 750px) {
@@ -689,6 +711,10 @@ label.publish__upload-btn:focus {
   /* POST STYLES */
   .post {
     width: 75%;
+  }
+
+  .gif__dropdown {
+    top: 52%;
   }
 }
 @media (min-width: 950px) {

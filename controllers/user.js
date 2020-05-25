@@ -27,7 +27,7 @@ exports.signup = async (req, res, next) => {
   let sql = `CALL signup(${userId}, "${req.body.first__name}", "${req.body.last__name}", "${req.body.email}", "${req.body.department}", "${encryptedPassword}", "${su}")`;
   connection.query(sql, (err, results) => {
     if (err) {
-      res.status(400).json({ message: "An error occured" });
+      res.status(400).json({ err });
     } else {
       res.status(200).json({ message: "Inscription réussie" });
     }
@@ -55,14 +55,10 @@ exports.login = async (req, res, next) => {
           );
           res.cookie("Token", accessToken, {
             httpOnly: true,
-            sameSite: true,
-            maxAge: 86400,
             secure: false,
           });
           res.cookie("su", su, {
             httpOnly: true,
-            sameSite: true,
-            maxAge: 86400,
             secure: false,
           });
           res.status(200).json({ message: "Connexion établie" });

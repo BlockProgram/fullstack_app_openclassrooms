@@ -3,6 +3,9 @@ const lastName = document.getElementById("last__name");
 const department = document.getElementById("department");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
+const passwordInput = document.querySelector(".password__input");
+const passwordInfo = document.querySelector(".password__info");
+const passwordSmall = document.querySelector(".password__small");
 const signUpBtn = document.querySelector(".signup__btn");
 
 // Check all fields. If valid then send POST request
@@ -45,6 +48,15 @@ function postData() {
         el.classList.add("success");
       });
       window.location.href = "/login";
+    } else if (req.readyState > 3 && req.status == 400) {
+      let response = JSON.parse(req.response);
+
+      // Email already exists error
+      if (response.err.errno == 1062) {
+        passwordSmall.style.display = "block";
+        passwordSmall.style.visibility = "visible";
+        passwordSmall.innerText = "L'adresse email existe déjà";
+      }
     }
   };
 }
@@ -65,9 +77,6 @@ signUpBtn.addEventListener("click", function (e) {
 });
 
 // Display info for password
-const passwordInput = document.querySelector(".password__input");
-const passwordInfo = document.querySelector(".password__info");
-const passwordSmall = document.querySelector(".password__small");
 
 passwordInput.addEventListener("focus", () => {
   passwordSmall.style.display = "none";

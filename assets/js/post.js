@@ -21,8 +21,8 @@ function getData() {
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
       let response = JSON.parse(req.response);
-      displayPost(response);
       console.log(response);
+      displayPost(response);
 
       // Display number of comments
       commentsNumber = response.results[0][0].nbComments;
