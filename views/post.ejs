@@ -2,10 +2,10 @@
 <html lang="fr">
   <head>
     <title><%= page %> - GroupoGIF</title>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="./../css/main.css" />
-<link
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./../css/main.css" />
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
       integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ="
@@ -15,47 +15,54 @@
   <body>
     <header class="header-feed">
       <a id="feed" href="/feed"
-  ><img
-    class="header__logo-feed"
-    src="./../images/icon-white.svg"
-    alt="logo de Groupomania"
-/></a>
-<div class="header__container">
-  <a id="profile" href="/profile"
-    ><button class="header__btn">Profil</button></a
-  >
-</div>
-      </header>
-      <main>
-        <section class="post">
-        </section>
-        <div class="post__comments-topdata">
-          <p class="post__comments-number"></p> 
-          <button onclick="toggleDropDown()" class="share-btn">
-            Partager
-          </button>
-        </div>
-          <div class="gif__dropdown">
-            <button onclick="closeDropDown()" class="dropdown--closebtn">X</button>
-            <p class="dropdown--copiedmsg">Lien copié</p>
-            <p>Lien du post :</p>
-            <input class="dropdown--input" type="text"  />
-            <button onclick="copyToClipboard()" class="dropdown--copybtn">Copier</button> 
-          </div>
-          <div class="post__publish-comment">
-            <input class="post__input-comment" type="text" placeholder="Ecrire un commentaire..." />
-            <button class="post__publish-btn">Commenter</button>
-          </div>
-        <section class="post__comments">
-        </section>
-      </main>
-      <footer>
-        <a href="/">
-          <p class="home__link">Accueil</p>
-        </a>
-        <a href="/profile">
-          <p class="profile__link">Profil</p>
-        </a>
-      </footer>
-      <script async src="./../js/post.js"></script>
+        ><img
+          class="header__logo-feed"
+          src="./../images/icon-white.svg"
+          alt="logo de Groupomania"
+      /></a>
+      <div class="header__container">
+        <a id="profile" href="/profile"
+          ><div class="header__btn">
+            <p>Profil</p>
+          </div></a
+        >
+      </div>
+    </header>
+    <main>
+      <div class="post"></div>
+      <div class="post__comments-topdata">
+        <p class="post__comments-number"></p>
+        <button onclick="toggleDropDown()" class="share-btn">
+          Partager
+        </button>
+      </div>
+      <div class="gif__dropdown">
+        <button onclick="closeDropDown()" class="dropdown--closebtn">X</button>
+        <p class="dropdown--copiedmsg">Lien copié</p>
+        <p>Lien du post :</p>
+        <input class="dropdown--input" type="text" />
+        <button onclick="copyToClipboard()" class="dropdown--copybtn">
+          Copier
+        </button>
+      </div>
+      <div class="post__publish-comment">
+        <input
+          class="post__input-comment"
+          type="text"
+          placeholder="Ecrire un commentaire..."
+        />
+        <button class="post__publish-btn">Commenter</button>
+      </div>
+      <div class="post__comments"></div>
+    </main>
+    <footer>
+      <a href="/">
+        <p class="home__link">Accueil</p>
+      </a>
+      <a href="/profile">
+        <p class="profile__link">Profil</p>
+      </a>
+    </footer>
+    <script async src="./../js/post.js"></script>
+  </body>
 </html>

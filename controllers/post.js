@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 
 let connection = mysql.createConnection({
   host: "localhost",
-  user: "openclass",
-  password: "randompass6",
+  user: "projectUser",
+  password: "random100S",
   database: "projet7",
 });
 

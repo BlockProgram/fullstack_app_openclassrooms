@@ -5,41 +5,48 @@
   </head>
   <body>
     <header class="header-feed">
-        <% include partials/header2 %>
-      </header>
-      <main>
-        <h1 class="publish__title">Publier un GIF</h1>
-        <form id="form" class="form" enctype="multipart/form-data">
-          <div class="form-control">
-            <label for="publish__gif-title">Titre</label>
-            <input type="text" id="publish__gif-title" class="input-data" />
-            <small>Error message</small>
-          </div>
-          <div class="form-control publish__last-container">
-            <label for="publish__url">Adresse URL du GIF</label>
-            <input type="text" id="publish__url" class="input-data" />
-            <small>Error message</small>
-          </div>
-          <p class="publish__or-text">OU</p>
-          <div class="form-control">
-            <input type="file" accept=".gif" id="file" name="gif" class="publish__file" />
-            <label class="publish__upload-btn" for="file"
-              >Ajouter un fichier GIF</label
-            >
-          </div>
-          <button class="publish__btn form__btn">
-            Publier
-          </button>
-        </form>
-      </main>
-      <footer>
-        <a href="/">
-          <p class="home__link">Accueil</p>
-        </a>
-        <a href="/profile">
-          <p class="profile__link">Profil</p>
-        </a>
-        <script src="./js/form.js"></script>
-        <script src="./js/publish.js"></script>
-      </footer>
+      <% include partials/header2 %>
+    </header>
+    <main>
+      <h1 class="publish__title">Publier un GIF</h1>
+      <form id="form" class="form" enctype="multipart/form-data">
+        <div class="form-control">
+          <label for="publish__gif-title">Titre</label>
+          <input type="text" id="publish__gif-title" class="input-data" />
+          <small>Error message</small>
+        </div>
+        <div class="form-control publish__last-container">
+          <label for="publish__url">Adresse URL du GIF</label>
+          <input type="text" id="publish__url" class="input-data" />
+          <small>Error message</small>
+        </div>
+        <p class="publish__or-text">OU</p>
+        <div class="form-control">
+          <input
+            type="file"
+            accept=".gif"
+            id="file"
+            name="gif"
+            class="publish__file"
+          />
+          <label class="publish__upload-btn" for="file"
+            >Ajouter un fichier GIF</label
+          >
+        </div>
+        <button class="publish__btn form__btn">
+          Publier
+        </button>
+      </form>
+    </main>
+    <footer>
+      <a href="/">
+        <p class="home__link">Accueil</p>
+      </a>
+      <a href="/profile">
+        <p class="profile__link">Profil</p>
+      </a>
+      <script src="./js/form.js"></script>
+      <script src="./js/publish.js"></script>
+    </footer>
+  </body>
 </html>
