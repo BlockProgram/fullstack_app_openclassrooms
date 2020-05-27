@@ -1,6 +1,15 @@
+<% if(isConnected === true){ %>
 <a id="feed" href="/feed"
   ><img
     class="header__logo"
     src="./images/icon-white.svg"
     alt="logo de Groupomania"
 /></a>
+<% } else{ %>
+<a id="feed" href="/"
+  ><img
+    class="header__logo"
+    src="./images/icon-white.svg"
+    alt="logo de Groupomania"
+/></a>
+<% } %>

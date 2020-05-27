@@ -10,15 +10,13 @@ const eraseBtn = document.querySelector(".erase-btn");
 // Get data from Database
 function getData() {
   let req = new XMLHttpRequest();
-  req.open("POST", "http://localhost:3000/api/auth/profile");
+  req.open("POST", "https://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
   req.send();
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200 && req.response !== "") {
       displayProfile(JSON.parse(req.response)[0][0]);
-    } else if (req.readyState > 3 && req.status == 401) {
-      window.location.href = "/";
     }
   };
 }
@@ -64,7 +62,7 @@ function formatRequestData() {
 // POST Modify request function
 function postData() {
   let req = new XMLHttpRequest();
-  req.open("PUT", "http://localhost:3000/api/auth/profile");
+  req.open("PUT", "https://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(modifiedData));
 
@@ -78,7 +76,7 @@ function postData() {
 // LOGOUT Profile
 function logOutProfile() {
   let req = new XMLHttpRequest();
-  req.open("DELETE", "http://localhost:3000/api/auth/profile/logout");
+  req.open("DELETE", "https://localhost:3000/api/auth/profile/logout");
   req.send();
 
   req.onreadystatechange = (e) => {
@@ -89,7 +87,7 @@ function logOutProfile() {
 // DELETE Profile
 function deleteProfile() {
   let req = new XMLHttpRequest();
-  req.open("DELETE", "http://localhost:3000/api/auth/profile");
+  req.open("DELETE", "https://localhost:3000/api/auth/profile");
   req.setRequestHeader("Content-Type", "application/json");
   req.send();
 

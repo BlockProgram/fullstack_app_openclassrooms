@@ -38,17 +38,13 @@ exports.publishPost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
-  let data;
   let sql = "CALL getAllPosts()";
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
-      // data = {};
     } else {
       res.status(200).json(results);
-      // data = results;
     }
-    // return data;
   });
 };
 

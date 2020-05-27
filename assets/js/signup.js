@@ -38,7 +38,7 @@ function formatRequestData() {
 // POST request function
 function postData() {
   var req = new XMLHttpRequest();
-  req.open("POST", "http://localhost:3000/api/auth/signup");
+  req.open("POST", "https://localhost:3000/api/auth/signup");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(signupData));
 

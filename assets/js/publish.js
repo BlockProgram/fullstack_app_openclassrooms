@@ -57,14 +57,12 @@ async function postData(input) {
 
   formData.append("gif", gif);
   formData.append("data", JSON.stringify(input));
-  req.open("POST", "http://localhost:3000/api/posts");
+  req.open("POST", "https://localhost:3000/api/posts");
   req.send(formData);
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
       window.location.href = "/feed";
-    } else {
-      window.location.href = "/";
     }
   };
 }

@@ -36,12 +36,14 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   let password = req.body.password__login;
-  let sql = `CALL login("${req.body.email__login}")`;
+  let email = req.body.email__login;
+  let sql = `CALL login("${email}")`;
   connection.query(sql, async (err, results) => {
     if (err) {
       res.status(400).json("Une erreur est survenue");
     } else {
-      if (results.length > 0) {
+      console.log(results[0], "text");
+      if (results[0].length > 0) {
         const comparison = await bcrypt.compare(password, results[0][0].mdp);
         if (comparison) {
           const su = results[0][0].su;
@@ -55,18 +57,18 @@ exports.login = async (req, res, next) => {
           );
           res.cookie("Token", accessToken, {
             httpOnly: true,
-            secure: false,
+            secure: true,
           });
           res.cookie("su", su, {
             httpOnly: true,
-            secure: false,
+            secure: true,
           });
           res.status(200).json({ message: "Connexion établie" });
         } else {
-          res.status(204).json("Mot de passe incorrect");
+          res.status(204).json({ message: "Mot de passe incorrect" });
         }
       } else {
-        res.status(206).json("Email invalide");
+        res.status(206).json({ message: "Email invalide" });
       }
     }
   });

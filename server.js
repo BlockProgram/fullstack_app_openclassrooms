@@ -1,4 +1,5 @@
-const http = require("http");
+const https = require("https");
+const fs = require("fs");
 const app = require("./app");
 
 const normalizePort = (val) => {
@@ -33,7 +34,14 @@ const errorHandler = (error) => {
       throw error;
   }
 };
-const server = http.createServer(app);
+const server = https.createServer(
+  {
+    key: fs.readFileSync("server.key"),
+    cert: fs.readFileSync("server.cert"),
+  },
+  app
+);
+
 server.on("error", errorHandler);
 server.on("listening", () => {
   const address = server.address();

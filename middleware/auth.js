@@ -23,12 +23,12 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
     const userId = decodedToken.userId;
 
-    let sql = `SELECT * FROM Users WHERE userId=?`;
+    let sql = `CALL auth(${userId})`;
     connection.query(sql, userId, (err, results) => {
       if (err) {
         res.status(400).json({ message: "An error occured" });
       } else {
-        if (results.length > 0) {
+        if (results[0].length > 0) {
           next();
         } else {
           res.status(401).json({ message: "Token invalide" });
@@ -36,6 +36,6 @@ module.exports = (req, res, next) => {
       }
     });
   } catch {
-    res.status(401).json({ error: new Error("Requête invalide") });
+    res.status(401).json({ message: "Requête invalide" });
   }
 };

@@ -5,14 +5,12 @@ const copyLinkBtn = document.querySelector(".dropdown--copybtn");
 // Get data from Database
 function getData() {
   var req = new XMLHttpRequest();
-  req.open("GET", "http://localhost:3000/api/posts");
+  req.open("GET", "https://localhost:3000/api/posts");
   req.send();
 
   req.onreadystatechange = (e) => {
     if (req.readyState > 3 && req.status == 200) {
       displayGifs(JSON.parse(req.response)[0]);
-    } else if (req.readyState > 3 && req.status == 401) {
-      window.location.href = "/";
     }
   };
 }
@@ -49,7 +47,7 @@ function displayGifs(array) {
       <div class="gif__dropdown dropdown-feed">
         <button onclick="closeDropDown()" class="dropdown--closebtn">X</button>
         <p>Lien du post :</p>
-        <input value="http://localhost:3000/post/${gif.postId}" class="dropdown--input" type="text"  />
+        <input value="https://localhost:3000/post/${gif.postId}" class="dropdown--input" type="text"  />
         <button onclick="copyToClipboard()" class="dropdown--copybtn">Copier</button>
       </div>
     </div>`;

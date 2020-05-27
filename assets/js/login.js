@@ -19,7 +19,7 @@ function submitLogin() {
 // POST request function
 function postLogin() {
   let req = new XMLHttpRequest();
-  req.open("POST", "http://localhost:3000/api/auth/login");
+  req.open("POST", "https://localhost:3000/api/auth/login");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(loginData));
 

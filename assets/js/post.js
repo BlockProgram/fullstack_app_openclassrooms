@@ -15,7 +15,7 @@ let commentsNumber = 0;
 // Get data from Database
 function getData() {
   let req = new XMLHttpRequest();
-  req.open("GET", `http://localhost:3000/api/posts/${postID}`);
+  req.open("GET", `https://localhost:3000/api/posts/${postID}`);
   req.send();
 
   req.onreadystatechange = (e) => {
@@ -26,8 +26,6 @@ function getData() {
       // Display number of comments
       commentsNumber = response.results[0][0].nbComments;
       numberCommentsEl.innerHTML = `<i class="far fa-comment"></i>${commentsNumber}`;
-    } else if (req.readyState > 3 && req.status == 401) {
-      window.location.href = "/";
     }
   };
 }
@@ -75,7 +73,7 @@ function displayPost(data) {
 
 function getComments() {
   let req = new XMLHttpRequest();
-  req.open("GET", `http://localhost:3000/api/posts/${postID}/comments`);
+  req.open("GET", `https://localhost:3000/api/posts/${postID}/comments`);
   req.send();
 
   req.onreadystatechange = (e) => {
@@ -136,7 +134,7 @@ function postComment() {
     nbComments: commentsNumber + 1,
   };
   let req = new XMLHttpRequest();
-  req.open("POST", `http://localhost:3000/api/posts/${postID}/comments`);
+  req.open("POST", `https://localhost:3000/api/posts/${postID}/comments`);
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(CommentData));
 
@@ -151,7 +149,7 @@ function deletePost() {
     postId: postID,
   };
   let req = new XMLHttpRequest();
-  req.open("DELETE", "http://localhost:3000/api/posts/:id");
+  req.open("DELETE", "https://localhost:3000/api/posts/:id");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(postData));
 
@@ -170,7 +168,7 @@ function deleteComment(commentId) {
 
   console.log(commentDeleteData);
   let req = new XMLHttpRequest();
-  req.open("DELETE", "http://localhost:3000/api/posts/:id/comments");
+  req.open("DELETE", "https://localhost:3000/api/posts/:id/comments");
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify(commentDeleteData));
 

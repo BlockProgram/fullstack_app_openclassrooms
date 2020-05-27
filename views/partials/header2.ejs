@@ -1,3 +1,4 @@
+<% if(isConnected === true){ %>
 <a id="feed" href="/feed"
   ><img
     class="header__logo-feed"
@@ -11,3 +12,18 @@
     </div></a
   >
 </div>
+<% } else{ %>
+<a id="feed" href="/"
+  ><img
+    class="header__logo-feed"
+    src="./images/icon-white.svg"
+    alt="logo de Groupomania"
+/></a>
+<div class="header__container">
+  <a id="profile" href="/"
+    ><div class="header__btn">
+      <p>Profil</p>
+    </div></a
+  >
+</div>
+<% } %>

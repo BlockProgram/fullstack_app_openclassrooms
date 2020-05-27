@@ -29,13 +29,13 @@ app.set("view engine", "ejs");
 //set path for static assets
 app.use(express.static(path.join(__dirname, "assets")));
 
+app.use(cookies());
+app.use(bodyParser.json());
+
 // Render HTML routes
 app.use("/", index);
 
 app.use(helmet());
-
-app.use(bodyParser.json());
-app.use(cookies());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);
