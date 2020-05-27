@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
+const htmlChars = require("htmlspecialchars");
 
 let connection = mysql.createConnection({
   host: "localhost",
@@ -27,7 +28,9 @@ exports.publishPost = (req, res, next) => {
     body.url ||
     `${req.protocol}://${req.get("host")}/gifs/${req.file.filename}`;
 
-  let sql = `CALL publishPost(${postId}, "${body.titre}", "${url}", ${userId}, ${nbComments})`;
+  let sql = `CALL publishPost(${postId}, "${htmlChars(
+    body.titre
+  )}", "${url}", ${userId}, ${nbComments})`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
@@ -80,7 +83,14 @@ exports.createComment = (req, res, next) => {
   let userId = jwt.verify(req.cookies["Token"], process.env.JWT_PRIVATE_KEY)
     .userId;
 
-  let sql = `CALL createComment(${req.body.commentId}, ${userId}, "${req.body.contenu}", ${req.body.postId}, ${req.body.nbComments})`;
+  let comment = {
+    Id: req.body.commentId,
+    contenu: htmlChars(req.body.contenu),
+    postId: req.body.postId,
+    nb: req.body.nbComments,
+  };
+
+  let sql = `CALL createComment(${comment.Id}, ${userId}, "${comment.contenu}", ${comment.postId}, ${comment.nb})`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });

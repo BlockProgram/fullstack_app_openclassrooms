@@ -24,15 +24,20 @@ function postLogin() {
   req.send(JSON.stringify(loginData));
 
   req.onreadystatechange = (e) => {
-    if (
+    if (req.status == 204) {
+      allFormControl.forEach((el) => {
+        el.classList.add("error");
+      });
+      errorMsg.textContent = "Mot de passe invalide";
+    } else if (
       (req.readyState > 3 && req.status == 400) ||
-      (req.readyState > 3 && req.status == 204) ||
       (req.readyState > 3 && req.status == 206)
     ) {
       allFormControl.forEach((el) => {
         el.classList.add("error");
       });
-      let response = JSON.parse(req.response);
+      let response = JSON.parse(req.response).message;
+
       errorMsg.textContent = response;
     } else if (req.readyState > 3 && req.status == 200) {
       allFormControl.forEach((el) => {

@@ -2,6 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mysql = require("mysql");
+const htmlChars = require("htmlspecialchars");
 
 let connection = mysql.createConnection({
   host: "localhost",
@@ -21,10 +22,15 @@ connection.connect(function (err) {
 exports.signup = async (req, res, next) => {
   let password = req.body.password;
   let encryptedPassword = await bcrypt.hash(password, 10);
-  let userId = 0;
-  let su = false;
+  let user = {
+    Id: 0,
+    firstName: htmlChars(req.body.first__name),
+    lastName: htmlChars(req.body.last__name),
+    email: htmlChars(req.body.email),
+    su: false,
+  };
 
-  let sql = `CALL signup(${userId}, "${req.body.first__name}", "${req.body.last__name}", "${req.body.email}", "${req.body.department}", "${encryptedPassword}", "${su}")`;
+  let sql = `CALL signup(${user.Id}, "${user.firstName}", "${user.lastName}", "${user.email}", "${req.body.department}", "${encryptedPassword}", "${user.su}")`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ err });
@@ -93,8 +99,13 @@ exports.modifyProfile = async (req, res, next) => {
     .userId;
   let password = req.body.password;
   let encryptedPassword = await bcrypt.hash(password, 10);
+  let user = {
+    firstName: htmlChars(req.body.first__name),
+    lastName: htmlChars(req.body.last__name),
+    email: htmlChars(req.body.email),
+  };
 
-  let sql = `CALL modifyProfile(${userId}, "${req.body.first__name}", "${req.body.last__name}", "${req.body.email}", "${req.body.department}", "${encryptedPassword}")`;
+  let sql = `CALL modifyProfile(${userId}, "${user.firstName}", "${user.lastName}", "${user.email}", "${req.body.department}", "${encryptedPassword}")`;
   connection.query(sql, (err, results) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
