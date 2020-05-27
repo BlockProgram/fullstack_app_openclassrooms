@@ -5,7 +5,8 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const modifyBtn = document.querySelector(".modifyprofile-btn");
 const logoutBtn = document.querySelector(".logout-btn");
-const eraseBtn = document.querySelector(".erase-btn");
+const dropDownMenu = document.querySelector(".profile__dropdown");
+const eraseBtn = document.querySelector(".dropdown--confirmbtn");
 
 // Get data from Database
 function getData() {
@@ -82,6 +83,16 @@ function logOutProfile() {
   req.onreadystatechange = (e) => {
     window.location.href = "/";
   };
+}
+
+// Toggle Delete Profile dropdown
+function toggleDropDown() {
+  dropDownMenu.classList.toggle("active");
+  dropDownLink.value = window.location.href;
+}
+
+function closeDropDown() {
+  dropDownMenu.classList.remove("active");
 }
 
 // DELETE Profile

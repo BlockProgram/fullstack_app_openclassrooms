@@ -56,7 +56,16 @@
         </button>
       </form>
       <button class="form__btn logout-btn">Se déconnecter</button>
-      <button class="form__btn erase-btn">Supprimer le compte</button>
+      <button onclick="toggleDropDown()" class="form__btn erase-btn">
+        Supprimer le compte
+      </button>
+      <div class="profile__dropdown">
+        <button onclick="closeDropDown()" class="dropdown--closebtn">X</button>
+        <p>Confirmer la suppression du compte:</p>
+        <button class="dropdown--confirmbtn">
+          Supprimer
+        </button>
+      </div>
     </main>
     <footer>
       <a href="/"> <p>Accueil</p></a>

@@ -558,6 +558,48 @@ label.publish__upload-btn {
   background-color: $primary-color;
 }
 
+.profile__dropdown {
+  background-color: $medium-grey;
+  box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.35);
+  display: none;
+  flex-direction: column;
+  height: 130px;
+  left: 50%;
+  min-width: 245px;
+  position: absolute;
+  text-align: center;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 55%;
+  &.active {
+    display: flex;
+  }
+  & .dropdown--closebtn {
+    background-color: $primary-color;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 0%;
+    width: 20px;
+  }
+  & p {
+    margin: 30px 0 5px;
+  }
+  & .dropdown--input {
+    margin-bottom: 10px;
+    place-self: center;
+    width: 80%;
+  }
+  & .dropdown--confirmbtn {
+    background-color: $primary-color;
+    font-size: 13px;
+    margin-top: 15px;
+    place-self: center;
+    width: 40%;
+  }
+}
+
 /* POST STYLES */
 .post {
   margin: 30px 0 10px;
@@ -822,6 +864,10 @@ label.publish__upload-btn {
   /* POST STYLES */
   .post {
     width: 55%;
+  }
+
+  .dropdown-post {
+    width: 35%;
   }
 }
 

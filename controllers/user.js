@@ -48,7 +48,6 @@ exports.login = async (req, res, next) => {
     if (err) {
       res.status(400).json("Une erreur est survenue");
     } else {
-      console.log(results[0], "text");
       if (results[0].length > 0) {
         const comparison = await bcrypt.compare(password, results[0][0].mdp);
         if (comparison) {
@@ -131,6 +130,9 @@ exports.deleteProfile = (req, res, next) => {
     if (err) {
       res.status(400).json({ message: "An error occured" });
     } else {
+      res.cookie("Token", "", {
+        maxAge: 86400,
+      });
       res.status(200).json({ message: "Profil supprimé" });
     }
   });
